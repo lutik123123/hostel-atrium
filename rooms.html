@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Номера | Атриум</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stail.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="nav">
+        <a href="index.html" class="logo">
+            <img src="png/logo.png" alt="Atrium Logo">
+        </a>
+        
+        <!-- Десктопное меню -->
+        <nav>
+          <a href="index.html" class="nav-link">Главная</a>
+          <a href="rooms.html" class="nav-link active">Номера</a>
+          <a href="conference.html" class="nav-link">Конференц-залы</a>
+          <a href="spa.html" class="nav-link">SPA-услуги</a>
+          <a href="contacts.html" class="nav-link">Контакты</a>
+          <a href="authorization.html" class="nav-link">Войти</a>
+        </nav>
+        
+        <!-- Мобильное меню -->
+        <button class="menu-toggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<main>
+<section class="rooms">
+  <h2 class="fade-block">Наши номера</h2>
+  <p class="fade-block" style="color: var(--gray); margin-bottom: 20px;">Выберите подходящий номер для вашего комфортного проживания</p>
+  
+  <div class="room-grid">
+    <!-- Стандарт -->
+    <div class="room-card fade-block">
+      <div class="room-image">
+        <img src="png/сандарт обложка.jpeg" alt="Стандарт номер">
+      </div>
+      <div class="room-info">
+        <h3>Стандарт</h3>
+        <p>Уютный номер с одной кроватью для комфортного отдыха. Идеально подходит для деловых поездок и короткого пребывания.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span style="color: var(--gold); font-weight: 600;">от 2 800 ₽/ночь</span>
+          <button class="btn-primary" onclick="openPremiumModal('standard')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Комфорт -->
+    <div class="room-card fade-block">
+      <div class="room-image">
+        <img src="png/комфорт обложка.jpeg" alt="Комфорт номер">
+      </div>
+      <div class="room-info">
+        <h3>Комфорт</h3>
+        <p>Просторный номер с улучшенной планировкой, рабочей зоной и современным дизайном.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span style="color: var(--gold); font-weight: 600;">от 3 500 ₽/ночь</span>
+          <button class="btn-primary" onclick="openPremiumModal('comfort')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Swiss Executive Lounge -->
+    <div class="room-card fade-block">
+      <div class="room-image">
+        <img src="png/Swiss обложка.jpeg" alt="Swiss Executive Lounge">
+      </div>
+      <div class="room-info">
+        <h3>Swiss Executive Lounge</h3>
+        <p>Эксклюзивный номер с доступом в лаунж-зону, панорамными окнами и повышенным уровнем комфорта.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span style="color: var(--gold); font-weight: 600;">от 8 500 ₽/ночь</span>
+          <button class="btn-primary" onclick="openPremiumModal('executive')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Полулюкс -->
+    <div class="room-card fade-block">
+      <div class="room-image">
+        <img src="png/полулюксобложка.jpeg" alt="Полулюкс номер">
+      </div>
+      <div class="room-info">
+        <h3>Полулюкс</h3>
+        <p>Просторнее стандарта с дополнительной зоной для отдыха и улучшенным видом из окна.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span style="color: var(--gold); font-weight: 600;">от 4 100 ₽/ночь</span>
+          <button class="btn-primary" onclick="openPremiumModal('junior-suite')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Люкс -->
+    <div class="room-card fade-block">
+      <div class="room-image">
+        <img src="png/люкс обложка.jpeg" alt="Люкс номер">
+      </div>
+      <div class="room-info">
+        <h3>Люкс</h3>
+        <p>Премиум-номер с зоной отдыха, улучшенной отделкой и панорамным видом на город.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span style="color: var(--gold); font-weight: 600;">от 6 500 ₽/ночь</span>
+          <button class="btn-primary" onclick="openPremiumModal('lux')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Семейный -->
+    <div class="room-card fade-block">
+      <div class="room-image">
+        <img src="png/семейный обложка.jpeg" alt="Семейный номер">
+      </div>
+      <div class="room-info">
+        <h3>Семейный</h3>
+        <p>Просторный номер с дополнительной кроватью — идеально для больших компаний и семей с детьми.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span style="color: var(--gold); font-weight: 600;">от 7 200 ₽/ночь</span>
+          <button class="btn-primary" onclick="openPremiumModal('family')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Президентский -->
+    <div class="room-card fade-block">
+      <div class="room-image">
+        <img src="png/презедентобложка.jpeg" alt="Президентский номер">
+      </div>
+      <div class="room-info">
+        <h3>Президентский</h3>
+        <p>Роскошный номер с гостиной зоной, отличным видом и повышенным комфортом для особых случаев.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span style="color: var(--gold); font-weight: 600;">от 12 000 ₽/ночь</span>
+          <button class="btn-primary" onclick="openPremiumModal('presidential')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Модальные окна для номеров -->
+<!-- Стандарт -->
+<div id="modal-standard" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Стандарт номер — с 1 кроватью</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/стандарт1.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/стандарт1.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/стандарт2.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/стандарт3.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">Вместимость до 2 мест</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📐</div>
+                    <span class="premium-parameter-text">25 м²</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚪</div>
+                    <span class="premium-parameter-text">1 комната</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📶</div>
+                    <span class="premium-parameter-text">Wi-Fi</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🌆</div>
+                    <span class="premium-parameter-text">Окно с видом на город</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛏️</div>
+                    <span class="premium-parameter-text">1 кровать Double</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📺</div>
+                    <span class="premium-parameter-text">Телевизор</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚭</div>
+                    <span class="premium-parameter-text">Номер для некурящих</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Уютный номер с одной кроватью для комфортного отдыха. Идеально подходит для деловых поездок и короткого пребывания. 
+                В номере есть все необходимое для приятного отдыха после насыщенного дня. 
+                Современный дизайн и функциональность создают атмосферу уюта и комфорта.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Характеристики номера</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Ванная комната</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Душ</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Фен</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Туалетные принадлежности</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Удобства</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кондиционер</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Телевизор с плоским экраном</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Сейф</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Чайник</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Рабочий стол</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ежедневная уборка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Круглосуточное обслуживание</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бесплатный Wi-Fi</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="bookRoom('Стандарт')">Забронировать номер</button>
+        </div>
+    </div>
+</div>
+
+<!-- Комфорт -->
+<div id="modal-comfort" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Комфорт номер — с улучшенной планировкой</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/комфорт1.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/комфорт1.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/комфорт2.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/комфорт3.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">Вместимость до 2 мест</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📐</div>
+                    <span class="premium-parameter-text">30 м²</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚪</div>
+                    <span class="premium-parameter-text">1 комната</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📶</div>
+                    <span class="premium-parameter-text">Wi-Fi</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🌳</div>
+                    <span class="premium-parameter-text">Окно с видом на двор</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛏️</div>
+                    <span class="premium-parameter-text">1 кровать King-size</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💼</div>
+                    <span class="premium-parameter-text">Рабочая зона</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚭</div>
+                    <span class="premium-parameter-text">Номер для некурящих</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Просторный номер с улучшенной планировкой, рабочей зоной и современным дизайном. 
+                Идеально подходит для длительного проживания и деловых поездок. 
+                В номере созданы все условия для комфортного отдыха и продуктивной работы.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Характеристики номера</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Ванная комната</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Душ с гидромассажем</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Фен</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Дизайнерские туалетные принадлежности</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Халаты и тапочки</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Удобства</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кондиционер</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Телевизор 4K</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Сейф для ноутбука</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Чайник и кофемашина</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Эргономичное рабочее место</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ежедневная уборка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Обслуживание номеров 24/7</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бесплатный Wi-Fi</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Приветственный набор</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="bookRoom('Комфорт')">Забронировать номер</button>
+        </div>
+    </div>
+</div>
+
+<!-- Swiss Executive Lounge -->
+<div id="modal-executive" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Swiss Executive Lounge</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/Swiss1.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/Swiss2.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/Swiss4.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/Swiss4.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">Вместимость до 2 мест</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📐</div>
+                    <span class="premium-parameter-text">45 м²</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚪</div>
+                    <span class="premium-parameter-text">1 комната</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📶</div>
+                    <span class="premium-parameter-text">Wi-Fi</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🏙️</div>
+                    <span class="premium-parameter-text">Панорамный вид на город</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛏️</div>
+                    <span class="premium-parameter-text">1 кровать King-size</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛋️</div>
+                    <span class="premium-parameter-text">Зона отдыха</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚭</div>
+                    <span class="premium-parameter-text">Номер для некурящих</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Эксклюзивный номер с доступом в лаунж-зону, панорамными окнами и повышенным уровнем комфорта. 
+                Идеально подходит для деловых поездок и особых случаев. Включает доступ в бизнес-лаунж с бесплатными напитками и закусками.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Характеристики номера</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Ванная комната</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Душ с гидромассажем</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Отдельная ванна</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Дизайнерские туалетные принадлежности</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Халаты и тапочки премиум-класса</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Удобства</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кондиционер</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Телевизор 4K Ultra HD</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Сейф для ноутбука</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кофемашина Nespresso</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Эргономичное рабочее место</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Доступ в Executive Lounge</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ежедневная уборка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Обслуживание номеров 24/7</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бесплатный Wi-Fi</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="bookRoom('Swiss Executive Lounge')">Забронировать номер</button>
+        </div>
+    </div>
+</div>
+
+<!-- Полулюкс -->
+<div id="modal-junior-suite" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Полулюкс</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/полулюкс1.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/полулюкс1.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/полулюкс2.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/полулюкс3.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">Вместимость до 2 мест</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📐</div>
+                    <span class="premium-parameter-text">35 м²</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚪</div>
+                    <span class="premium-parameter-text">1 комната</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📶</div>
+                    <span class="premium-parameter-text">Wi-Fi</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🌳</div>
+                    <span class="premium-parameter-text">Окно с видом на парк</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛏️</div>
+                    <span class="premium-parameter-text">1 кровать Queen-size</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛋️</div>
+                    <span class="premium-parameter-text">Зона отдыха</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚭</div>
+                    <span class="premium-parameter-text">Номер для некурящих</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Просторнее стандарта с дополнительной зоной для отдыха и улучшенным видом из окна. 
+                Идеально подходит для романтического отдыха или длительного пребывания.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Характеристики номера</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Ванная комната</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Душ</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Фен</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Туалетные принадлежности</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Халаты</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Удобства</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кондиционер</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Телевизор с плоским экраном</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Сейф</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Чайник</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Мини-бар</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ежедневная уборка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Круглосуточное обслуживание</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бесплатный Wi-Fi</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="bookRoom('Полулюкс')">Забронировать номер</button>
+        </div>
+    </div>
+</div>
+
+<!-- Люкс -->
+<div id="modal-lux" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Люкс</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/люкс1.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/люкс2.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/люкс3.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/люкс4.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">Вместимость до 2 мест</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📐</div>
+                    <span class="premium-parameter-text">50 м²</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚪</div>
+                    <span class="premium-parameter-text">1 комната</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📶</div>
+                    <span class="premium-parameter-text">Wi-Fi</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🏙️</div>
+                    <span class="premium-parameter-text">Панорамный вид на город</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛏️</div>
+                    <span class="premium-parameter-text">1 кровать King-size</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛋️</div>
+                    <span class="premium-parameter-text">Просторная зона отдыха</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚭</div>
+                    <span class="premium-parameter-text">Номер для некурящих</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Премиум-номер с зоной отдыха, улучшенной отделкой и панорамным видом на город. 
+                Идеально подходит для особых случаев и деловых поездок высшего уровня.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Характеристики номера</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Ванная комната</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Душ с гидромассажем</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Отдельная ванна</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Дизайнерские туалетные принадлежности</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Халаты и тапочки премиум-класса</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Удобства</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кондиционер</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Телевизор 4K Ultra HD</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Сейф для ноутбука</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кофемашина Nespresso</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Мини-бар</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ежедневная уборка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Обслуживание номеров 24/7</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бесплатный Wi-Fi</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Приветственный набор</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="bookRoom('Люкс')">Забронировать номер</button>
+        </div>
+    </div>
+</div>
+
+<!-- Семейный -->
+<div id="modal-family" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Семейный номер</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/семейный1.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/семейный2.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/семейный3.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/семейный4.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">Вместимость до 4 мест</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📐</div>
+                    <span class="premium-parameter-text">55 м²</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚪</div>
+                    <span class="premium-parameter-text">1 комната</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📶</div>
+                    <span class="premium-parameter-text">Wi-Fi</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🌳</div>
+                    <span class="premium-parameter-text">Окно с видом на парк</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛏️</div>
+                    <span class="premium-parameter-text">1 двуспальная кровать + 2 односпальные</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👶</div>
+                    <span class="premium-parameter-text">Подходит для детей</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚭</div>
+                    <span class="premium-parameter-text">Номер для некурящих</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Просторный номер с дополнительной кроватью — идеально для больших компаний и семей с детьми. 
+                В номере созданы все условия для комфортного проживания семьи или компании друзей.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Характеристики номера</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Ванная комната</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Душ</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Фен</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Туалетные принадлежности</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Детские туалетные принадлежности</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Удобства</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кондиционер</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Телевизор с плоским экраном</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Сейф</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Чайник</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Мини-холодильник</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ежедневная уборка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Круглосуточное обслуживание</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бесплатный Wi-Fi</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Детская кроватка по запросу</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="bookRoom('Семейный')">Забронировать номер</button>
+        </div>
+    </div>
+</div>
+
+<!-- Президентский -->
+<div id="modal-presidential" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Президентский люкс</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/презедент1.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/презедент2.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/презедент3.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/презедент4.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">Вместимость до 2 мест</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📐</div>
+                    <span class="premium-parameter-text">80 м²</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚪</div>
+                    <span class="premium-parameter-text">2 комнаты</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">📶</div>
+                    <span class="premium-parameter-text">Wi-Fi</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🏙️</div>
+                    <span class="premium-parameter-text">Панорамный вид на город</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛏️</div>
+                    <span class="premium-parameter-text">1 кровать King-size</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🛋️</div>
+                    <span class="premium-parameter-text">Отдельная гостиная</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🚭</div>
+                    <span class="premium-parameter-text">Номер для некурящих</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Роскошный номер с гостиной зоной, отличным видом и повышенным комфортом для особых случаев. 
+                Апартаменты премиум-класса с отдельной гостиной, спальней и ванной комнатой.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Характеристики номера</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Ванная комната</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Душ с гидромассажем</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Отдельная ванна Jacuzzi</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Дизайнерские туалетные принадлежности</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Халаты и тапочки премиум-класса</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Удобства</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кондиционер</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>2 телевизора 4K Ultra HD</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Сейф для ноутбука</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Кофемашина Nespresso</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Полностью укомплектованный мини-бар</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ежедневная уборка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Персональный консьерж-сервис</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бесплатный Wi-Fi</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Приветственный набор премиум-класса</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="bookRoom('Президентский')">Забронировать номер</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>О гостинице «Атриум»</h3>
+      <p>Современная гостиница в центре города, предлагающая комфортабельные номера и высокий уровень сервиса для вашего идеального отдыха.</p>
+      <div class="social-links">
+        <a href="https://vk.com/club233613781" target="_blank">VK</a>
+        <a href="#">Instagram</a>
+        <a href="#">Telegram</a>
+      </div>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Наши услуги</h3>
+      <ul>
+        <li><a href="rooms.html">Бронирование номеров</a></li>
+        <li><a href="conference.html">Конференц-залы</a></li>
+        <li><a href="spa.html">SPA-услуги</a></li>
+        <li><a href="#">Трансфер от/до аэропорта</a></li>
+        <li><a href="#">Ресторан</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Быстрые ссылки</h3>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="rooms.html">Номера</a></li>
+        <li><a href="conference.html">Конференц-залы</a></li>
+        <li><a href="spa.html">SPA-услуги</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section footer-contact">
+      <h3>Контакты</h3>
+      <p>📍 г. Москва, ул. Примерная, 45</p>
+      <p>📞 +7 (495) 555-33-22</p>
+      <p>✉️ info@atriumhotel.ru</p>
+      <p>🕒 Круглосуточно</p>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>© 2025 Гостиница «Атриум». Все права защищены.</p>
+  </div>
+</footer>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+    <div class="mobile-logo">
+        <img src="png/logo.png" alt="Atrium Logo">
+    </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">Главная</a>
+        <a href="rooms.html" class="mobile-nav-link active">Номера</a>
+        <a href="conference.html" class="mobile-nav-link">Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">SPA-услуги</a>
+        <a href="contacts.html" class="mobile-nav-link">Контакты</a>
+        <a href="authorization.html" class="mobile-nav-link">Войти</a>
+    </nav>
+</div>
+
+<script src="scripts.js"></script>
+
+<script>
+// Функции для модальных окон нового стиля
+function openPremiumModal(roomType) {
+    const modalId = `modal-${roomType}`;
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closePremiumModal(roomType) {
+    const modalId = `modal-${roomType}`;
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function closeAllModals() {
+    document.querySelectorAll('.premium-modal').forEach(modal => {
+        modal.classList.remove('active');
+    });
+    document.body.style.overflow = '';
+}
+
+// Обработчики событий для модальных окон
+document.addEventListener('DOMContentLoaded', function() {
+    // Закрытие модальных окон
+    document.querySelectorAll('.premium-close-modal').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const modal = this.closest('.premium-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Закрытие при клике вне модального окна
+    document.querySelectorAll('.premium-modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Закрытие по ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeAllModals();
+        }
+    });
+});
+
+// Убедимся, что bookRoom доступна глобально
+window.bookRoom = window.bookRoom || function(roomName) {
+    console.log('Booking room from rooms.html:', roomName);
+    // Резервная функция на случай, если scripts.js не загрузился
+    const params = new URLSearchParams(window.location.search);
+    const bookingParams = new URLSearchParams();
+    
+    bookingParams.set('room', roomName);
+    bookingParams.set('checkin', params.get('checkin') || '15.11.2024');
+    bookingParams.set('checkout', params.get('checkout') || '18.11.2024');
+    bookingParams.set('guests', params.get('guests') || '2 гостя');
+    
+    window.location.href = "booking.html?" + bookingParams.toString();
+};
+
+// Анимации при загрузке для rooms.html
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+  
+  // Анимация для карточек номеров
+  const roomCards = document.querySelectorAll('.room-card');
+  roomCards.forEach((card, index) => {
+    setTimeout(() => {
+      if (card.getBoundingClientRect().top < window.innerHeight - 150) {
+        card.classList.add('show-anim');
+      }
+    }, index * 100);
+  });
+});
+
+// Инициализация анимаций при скролле для rooms.html
+function animateOnScrollRooms() {
+  let blocks = document.querySelectorAll('.fade-block');
+  let windowHeight = window.innerHeight;
+  
+  blocks.forEach(block => {
+    let elementTop = block.getBoundingClientRect().top;
+    let elementVisible = 150;
+    
+    if (elementTop < windowHeight - elementVisible) {
+      block.classList.add('show-anim');
+    }
+  });
+}
+
+// Добавляем обработчик скролла
+window.addEventListener("scroll", animateOnScrollRooms);
+
+// Дополнительный вызов для видимых элементов
+setTimeout(animateOnScrollRooms, 300);
+
+</script>
+
+</body>
+</html>

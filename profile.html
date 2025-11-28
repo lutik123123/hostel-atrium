@@ -1,0 +1,512 @@
+<!-- profile.html -->
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Профиль | Атриум</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stail.css">
+  <style>
+    .profile-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 30px;
+    }
+
+    .profile-section {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: #666;
+      margin-right: 20px;
+    }
+
+    .user-info h2 {
+      margin: 0 0 5px 0;
+      color: #2c3e50;
+    }
+
+    .user-level {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #cd7f32;
+      color: white;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .level-silver { background: #c0c0c0; }
+    .level-gold { background: #ffd700; color: #333; }
+    .level-platinum { background: #e5e4e2; color: #333; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2c3e50;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .bookings-list {
+      margin-top: 20px;
+    }
+
+    .booking-item {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .booking-status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-active { background: #e8f5e8; color: #2e7d32; }
+    .status-completed { background: #f0f0f0; color: #666; }
+    .status-cancelled { background: #ffebee; color: #c62828; }
+
+    .levels-info {
+      position: relative;
+    }
+
+    .level-tooltip {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    .levels-info:hover .level-tooltip {
+      display: block;
+    }
+
+    .level-benefit {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .level-benefit::before {
+      content: "✓";
+      color: #4caf50;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .logout-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="nav">
+        <a href="index.html" class="logo">
+            <img src="png/logo.png" alt="Atrium Logo">
+        </a>
+        
+        <nav>
+          <a href="index.html" class="nav-link">Главная</a>
+          <a href="rooms.html" class="nav-link">Номера</a>
+          <a href="conference.html" class="nav-link">Конференц-залы</a>
+          <a href="spa.html" class="nav-link">SPA-услуги</a>
+          <a href="contacts.html" class="nav-link">Контакты</a>
+          <a href="profile.html" class="nav-link active">Профиль</a>
+        </nav>
+        
+        <button class="menu-toggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<main>
+  <div class="profile-container">
+    <div class="profile-main">
+      <div class="profile-section">
+        <div class="profile-header">
+          <div style="display: flex; align-items: center;">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-info">
+              <h2 id="userName">Пользователь</h2>
+              <span class="user-level" id="userLevel">Бронзовый</span>
+            </div>
+          </div>
+          <button class="logout-btn" onclick="logout()">Выйти</button>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-number" id="totalBookings">0</span>
+            <span class="stat-label">Всего бронирований</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="completedBookings">0</span>
+            <span class="stat-label">Завершенные</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="activeBookings">0</span>
+            <span class="stat-label">Активные</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="userDiscount">5%</span>
+            <span class="stat-label">Текущая скидка</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h3>Мои данные</h3>
+        <form id="profileForm">
+          <div class="form-group">
+            <label for="editName">Имя и фамилия</label>
+            <input type="text" id="editName" class="input-field" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="editEmail">Email</label>
+            <input type="email" id="editEmail" class="input-field" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="editPhone">Телефон</label>
+            <input type="tel" id="editPhone" class="input-field" required>
+          </div>
+          
+          <button type="submit" class="btn-primary">Сохранить изменения</button>
+        </form>
+      </div>
+
+      <div class="profile-section">
+        <h3>Активные бронирования</h3>
+        <div class="bookings-list" id="activeBookingsList">
+          <!-- Активные бронирования будут здесь -->
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h3>История бронирований</h3>
+        <div class="bookings-list" id="bookingHistory">
+          <!-- История бронирований будет здесь -->
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-sidebar">
+      <div class="profile-section levels-info">
+        <h3>Уровень профиля</h3>
+        <div class="user-level-large" id="userLevelLarge">Бронзовый</div>
+        <p>Ваши привилегии:</p>
+        
+        <div class="level-tooltip">
+          <h4>Система уровней</h4>
+          <div class="level-benefit">Бронзовый: скидка 5% на ресторан</div>
+          <div class="level-benefit">Серебряный: скидка 10% на ресторан + бесплатный завтрак</div>
+          <div class="level-benefit">Золотой: скидка 15% на ресторан + бесплатный завтрак + поздний выезд</div>
+          <div class="level-benefit">Платиновый: скидка 20% на все услуги + все вышеперечисленные привилегии</div>
+        </div>
+
+        <div class="progress-bar" style="background: #f0f0f0; height: 8px; border-radius: 4px; margin: 15px 0;">
+          <div id="levelProgress" style="background: #cd7f32; height: 100%; border-radius: 4px; width: 30%;"></div>
+        </div>
+        <p style="font-size: 14px; color: #666;">До следующего уровня: <span id="nextLevelProgress">2</span> бронирований</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <!-- Тот же футер что и в других страницах -->
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// Проверка авторизации
+function checkAuth() {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  if (!user) {
+    window.location.href = 'authorization.html';
+    return null;
+  }
+  return user;
+}
+
+// Загрузка данных пользователя
+function loadUserData() {
+  const user = checkAuth();
+  if (!user) return;
+
+  // Заполняем данные в форме
+  document.getElementById('editName').value = user.name || '';
+  document.getElementById('editEmail').value = user.email || '';
+  document.getElementById('editPhone').value = user.phone || '';
+  document.getElementById('userName').textContent = user.name || 'Пользователь';
+  document.getElementById('userAvatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
+  
+  // Уровень и статистика
+  updateUserStats(user);
+  loadBookings(user.id);
+}
+
+// Обновление статистики
+function updateUserStats(user) {
+  const stats = user.stats || { total: 0, completed: 0, active: 0 };
+  
+  document.getElementById('totalBookings').textContent = stats.total;
+  document.getElementById('completedBookings').textContent = stats.completed;
+  document.getElementById('activeBookings').textContent = stats.active;
+  
+  // Определяем уровень
+  let level = 'Бронзовый';
+  let discount = '5%';
+  let nextLevel = 2;
+  
+  if (stats.total >= 10) {
+    level = 'Платиновый';
+    discount = '20%';
+    nextLevel = 'MAX';
+  } else if (stats.total >= 5) {
+    level = 'Золотой';
+    discount = '15%';
+    nextLevel = 10 - stats.total;
+  } else if (stats.total >= 2) {
+    level = 'Серебряный';
+    discount = '10%';
+    nextLevel = 5 - stats.total;
+  }
+  
+  document.getElementById('userLevel').textContent = level;
+  document.getElementById('userLevelLarge').textContent = level;
+  document.getElementById('userDiscount').textContent = discount;
+  
+  // Прогресс бар
+  const progress = stats.total >= 10 ? 100 : (stats.total / 10) * 100;
+  document.getElementById('levelProgress').style.width = `${progress}%`;
+  document.getElementById('nextLevelProgress').textContent = nextLevel;
+  
+  // Цвет уровня
+  const levelElement = document.getElementById('userLevel');
+  levelElement.className = 'user-level';
+  if (level === 'Серебряный') levelElement.classList.add('level-silver');
+  else if (level === 'Золотой') levelElement.classList.add('level-gold');
+  else if (level === 'Платиновый') levelElement.classList.add('level-platinum');
+}
+
+// Загрузка бронирований
+function loadBookings(userId) {
+  const allBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+  const userBookings = allBookings.filter(booking => booking.userId === userId);
+  
+  const activeBookings = userBookings.filter(b => b.status === 'active');
+  const pastBookings = userBookings.filter(b => b.status === 'completed' || b.status === 'cancelled');
+  
+  displayBookings(activeBookings, 'activeBookingsList');
+  displayBookings(pastBookings, 'bookingHistory');
+}
+
+// Отображение бронирований
+function displayBookings(bookings, containerId) {
+  const container = document.getElementById(containerId);
+  
+  if (bookings.length === 0) {
+    container.innerHTML = '<p style="color: #666; text-align: center;">Нет бронирований</p>';
+    return;
+  }
+  
+  container.innerHTML = bookings.map(booking => `
+    <div class="booking-item">
+      <div>
+        <strong>${booking.roomType}</strong>
+        <div style="font-size: 14px; color: #666;">${booking.dates}</div>
+      </div>
+      <div class="booking-status status-${booking.status}">
+        ${getStatusText(booking.status)}
+      </div>
+    </div>
+  `).join('');
+}
+
+function getStatusText(status) {
+  const statusMap = {
+    'active': 'Активно',
+    'completed': 'Завершено', 
+    'cancelled': 'Отменено'
+  };
+  return statusMap[status] || status;
+}
+
+// Сохранение профиля
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const user = checkAuth();
+  if (!user) return;
+  
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+  const userIndex = users.findIndex(u => u.id === user.id);
+  
+  if (userIndex !== -1) {
+    users[userIndex].name = document.getElementById('editName').value;
+    users[userIndex].email = document.getElementById('editEmail').value;
+    users[userIndex].phone = document.getElementById('editPhone').value;
+    
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+    
+    showToast('Данные успешно обновлены!');
+    loadUserData(); // Перезагружаем данные
+  }
+});
+
+// Выход
+function logout() {
+  localStorage.removeItem('currentUser');
+  window.location.href = 'index.html';
+}
+
+// Уведомления
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', function() {
+  loadUserData();
+  
+  // Создаем тестовые данные при первом входе
+  const user = checkAuth();
+  if (user && (!user.stats || !localStorage.getItem('bookings'))) {
+    initializeTestData(user);
+  }
+});
+
+// Инициализация тестовых данных
+function initializeTestData(user) {
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+  const userIndex = users.findIndex(u => u.id === user.id);
+  
+  if (userIndex !== -1) {
+    // Добавляем статистику
+    users[userIndex].stats = { total: 3, completed: 2, active: 1 };
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+    
+    // Создаем тестовые бронирования
+    const bookings = [
+      {
+        id: 1,
+        userId: user.id,
+        roomType: 'Стандартный номер',
+        dates: '15.04.2024 - 20.04.2024',
+        status: 'completed'
+      },
+      {
+        id: 2, 
+        userId: user.id,
+        roomType: 'Люкс с видом на море',
+        dates: '10.05.2024 - 15.05.2024',
+        status: 'completed'
+      },
+      {
+        id: 3,
+        userId: user.id, 
+        roomType: 'Бизнес номер',
+        dates: '25.05.2024 - 30.05.2024',
+        status: 'active'
+      }
+    ];
+    
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    loadUserData(); // Перезагружаем данные
+  }
+}
+</script>
+
+</body>
+</html>
