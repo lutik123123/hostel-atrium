@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Подтверждение бронирования | Атриум</title>
+  <link rel="stylesheet" href="stail.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="nav">
+        <a href="index.html" class="logo">
+            <img src="png/logo.png" alt="Atrium Logo">
+        </a>
+        
+        <!-- Десктопное меню -->
+        <nav>
+  <a href="index.html" class="nav-link">Главная</a>
+  <a href="rooms.html" class="nav-link">Номера</a>
+  <a href="conference.html" class="nav-link">Конференц-залы</a>
+  <a href="spa.html" class="nav-link">SPA-услуги</a>
+  <a href="contacts.html" class="nav-link">Контакты</a>
+  <a href="authorization.html" class="nav-link" id="loginBtn">Войти</a>
+</nav>
+        
+        <!-- Мобильное меню -->
+        <button class="menu-toggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<main>
+<section class="confirm-section">
+  <h2>Подтверждение бронирования</h2>
+  
+  <div class="booking-summary">
+    <h3>Детали бронирования</h3>
+    <p><strong>Номер:</strong> <span id="bookingRoom">Стандарт</span></p>
+    <p><strong>Заезд:</strong> <span id="bookingCheckin">15.11.2024</span></p>
+    <p><strong>Выезд:</strong> <span id="bookingCheckout">18.11.2024</span></p>
+    <p><strong>Гости:</strong> <span id="bookingGuests">2 гостя</span></p>
+  </div>
+
+  <form id="confirmForm" class="confirm-form">
+    <div class="input-group">
+      <label>Номер телефона</label>
+      <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+    </div>
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="example@mail.ru" required>
+    </div>
+    <div class="input-group">
+      <label>Промокод (необязательно)</label>
+      <input type="text" id="promo" placeholder="Введите промокод">
+    </div>
+    <button type="submit" class="btn-primary">Подтвердить бронирование</button>
+  </form>
+  <div id="thankBox" class="thank-box">Сейчас мы вам позвоним что бы проверить информацию</div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>О гостинице «Атриум»</h3>
+      <p>Современная гостиница в центре города, предлагающая комфортабельные номера и высокий уровень сервиса для вашего идеального отдыха.</p>
+      <div class="social-links">
+        <a href="https://vk.com/club233613781" target="_blank">VK</a>
+        <a href="#">Instagram</a>
+        <a href="#">Telegram</a>
+      </div>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Наши услуги</h3>
+      <ul>
+        <li><a href="rooms.html">Бронирование номеров</a></li>
+        <li><a href="#">Конференц-залы</a></li>
+        <li><a href="#">Трансфер от/до аэропорта</a></li>
+        <li><a href="#">SPA-услуги</a></li>
+        <li><a href="#">Ресторан</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Быстрые ссылки</h3>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="rooms.html">Номера</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+        <li><a href="#">Акции</a></li>
+        <li><a href="#">Отзывы</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section footer-contact">
+      <h3>Контакты</h3>
+      <p>📍 г. Москва, ул. Примерная, 45</p>
+      <p>📞 +7 (495) 555-33-22</p>
+      <p>✉️ info@atriumhotel.ru</p>
+      <p>🕒 Круглосуточно</p>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>© 2025 Гостиница «Атриум». Все права защищены.</p>
+  </div>
+</footer>
+
+<script>
+window.addEventListener("load",() => {
+  document.body.classList.add("loaded");
+  
+  // Получаем параметры из URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const room = urlParams.get('room') || 'Стандарт';
+  const service = urlParams.get('service');
+  const type = urlParams.get('type');
+  const checkin = urlParams.get('checkin') || '15.11.2024';
+  const checkout = urlParams.get('checkout') || '18.11.2024';
+  const guests = urlParams.get('guests') || '2 гостя';
+
+  // Заполняем данные бронирования
+  if (service && type) {
+    // Если бронируется услуга (SPA или конференц-зал)
+    document.getElementById('bookingRoom').textContent = service;
+    document.getElementById('bookingCheckin').textContent = 'По согласованию';
+    document.getElementById('bookingCheckout').textContent = 'По согласованию';
+    document.getElementById('bookingGuests').textContent = 'Не указано';
+    
+    // Меняем заголовок для услуг
+    document.querySelector('.confirm-section h2').textContent = 'Подтверждение бронирования услуги';
+  } else {
+    // Если бронируется номер
+    document.getElementById('bookingRoom').textContent = room;
+    document.getElementById('bookingCheckin').textContent = checkin;
+    document.getElementById('bookingCheckout').textContent = checkout;
+    document.getElementById('bookingGuests').textContent = guests;
+  }
+
+  const form = document.getElementById("confirmForm");
+  const thank = document.getElementById("thankBox");
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    thank.classList.add("show");
+    setTimeout(() => {
+      thank.classList.remove("show");
+    }, 5000);
+  });
+});
+</script>
+<script src="scripts.js"></script>
+<script src="auth.js"></script>
+
+
+</body>
+</html>
+
