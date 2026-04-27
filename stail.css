@@ -671,7 +671,7 @@ body.loaded .fade-block {
     justify-content: center;
     align-items: center;
     min-height: 80vh;
-    background: var(--light-gray);
+    background: white;
 }
 
 .auth-container {
@@ -4961,4 +4961,13 @@ body.loaded .fade-block {
 .nav-link:hover,
 .vk-nav-btn:hover {
     box-shadow: none;
+}
+}
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white; /* Изменено с градиента на белый */
+    padding: 120px 20px 60px;
 }

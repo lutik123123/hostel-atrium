@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизация - Отель Атриум</title>
     <link rel="stylesheet" href="stail.css">
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
     <style>
         .auth-page {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: white;
             padding: 120px 20px 60px;
         }
 
@@ -172,6 +173,7 @@
                 <a href="rooms.html" class="nav-link">Номера</a>
                 <a href="conference.html" class="nav-link">Конференц-залы</a>
                 <a href="spa.html" class="nav-link">SPA-услуги</a>
+                <a href="news.html" class="nav-link">Новости</a>
                 <a href="contacts.html" class="nav-link">Контакты</a>
                 <a href="#" class="nav-link" id="loginBtn">Войти</a>
             </nav>
@@ -265,14 +267,21 @@
 
     <!-- Мобильное меню -->
     <div class="mobile-menu-overlay"></div>
-    <div class="mobile-menu">
-        <div class="mobile-logo">
-            <img src="png/logo.png" alt="Atrium Logo">
-        </div>
-        <nav class="mobile-nav">
-            <a href="index.html" class="mobile-nav-link">Главная</a>
-        </nav>
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <img src="png/logo.png" alt="Atrium Logo" class="mobile-logo-img">
+        <button class="mobile-close" aria-label="Закрыть меню">✕</button>
     </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">🏠 Главная</a>
+        <a href="rooms.html" class="mobile-nav-link active">🛏️ Номера</a>
+        <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>
+        <a href="news.html" class="mobile-nav-link">📰 Новости</a>
+        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
+    </nav>
+</div>
 
     <!-- Подключаем скрипты -->
     <script src="auth.js"></script>

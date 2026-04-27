@@ -1,0 +1,754 @@
+[file name]: news.html
+[file content begin]
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости — Отель Атриум</title>
+    <link rel="stylesheet" href="stail.css">
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ================= NEWS SECTION STYLES ================= */
+        .news-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .news-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .news-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .filter-btn {
+            padding: 10px 24px;
+            border: 2px solid var(--border);
+            background: var(--white);
+            color: var(--gray);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--gold);
+            color: var(--black);
+        }
+        
+        .filter-btn.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--black);
+        }
+        
+        /* Грид для новостей */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .news-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .news-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: var(--gold);
+        }
+        
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .news-item:hover .news-image img {
+            transform: scale(1.05);
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .news-text {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp:3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
+            font-size: 13px;
+        }
+        
+        .news-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .news-actions .btn-vk {
+            flex: 1;
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .news-actions .btn-vk:hover {
+            background: #1e3d6f;
+        }
+        
+        .news-actions .btn-share {
+            flex: 1;
+            background: var(--light-gray);
+            color: var(--black);
+            border: 1px solid var(--border);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .news-actions .btn-share:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+        
+        /* Состояния загрузки и ошибок */
+        .loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(241, 181, 68, 0.2);
+            border-left-color: var(--gold);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        .error-message {
+            grid-column: 1 / -1;
+            background: rgba(255, 87, 87, 0.1);
+            border: 1px solid #ff5757;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .error-message h3 {
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+        
+        .error-message p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .news-section {
+                padding: 60px 15px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .news-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 200px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .news-section {
+                padding: 40px 10px;
+            }
+            
+            .news-image {
+                height: 180px;
+            }
+            
+            .news-stats {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .news-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="nav">
+        <a href="index.html" class="logo">
+            <img src="png/logo.png" alt="Atrium Logo">
+        </a>
+        
+        <!-- Десктопное меню -->
+        <nav>
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="rooms.html" class="nav-link">Номера</a>
+            <a href="conference.html" class="nav-link">Конференц-залы</a>
+            <a href="spa.html" class="nav-link">SPA-услуги</a>
+            <a href="news.html" class="nav-link active">Новости</a>
+            <a href="contacts.html" class="nav-link">Контакты</a>
+            <a href="authorization.html" class="nav-link" id="loginBtn">Войти</a>
+        </nav>
+        
+        <!-- Мобильное меню -->
+        <button class="menu-toggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<div class="page-offset"></div>
+
+<!-- ===== NEWS SECTION ===== -->
+<section class="news-section">
+    <div class="news-header">
+        <h2>Новости отеля Атриум</h2>
+        <p>Будьте в курсе последних событий, акций и обновлений</p>
+    </div>
+    
+    <div class="news-filters">
+        <button class="filter-btn active" data-filter="all">Все новости</button>
+        <button class="filter-btn" data-filter="promo">Акции</button>
+        <button class="filter-btn" data-filter="event">События</button>
+        <button class="filter-btn" data-filter="update">Обновления</button>
+    </div>
+    
+    <div class="news-grid" id="postsContainer">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>Загрузка новостей...</p>
+        </div>
+    </div>
+    
+    <div id="errorContainer" class="error-message" style="display: none;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Не удалось загрузить новости</h3>
+        <p>Проверьте подключение к интернету или обновите страницу.</p>
+        <button onclick="loadVKPosts()" class="btn-primary">
+            Попробовать снова
+        </button>
+    </div>
+    
+    <div id="emptyState" class="empty-state" style="display: none;">
+        <i class="fas fa-newspaper"></i>
+        <h3>Новостей пока нет</h3>
+        <p>Следите за обновлениями в нашей группе ВКонтакте</p>
+        <a href="https://vk.com/club233613781" target="_blank" class="btn-primary">
+            Перейти в группу ВК
+        </a>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>О гостинице «Атриум»</h3>
+            <p>Современная гостиница в центре города, предлагающая комфортабельные номера и высокий уровень сервиса для вашего идеального отдыха.</p>
+            <div class="social-links">
+                <a href="https://vk.com/club233613781" target="_blank">VK</a>
+                <a href="#">Rutube</a>
+                <a href="#">Max</a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Наши услуги</h3>
+            <ul>
+                <li><a href="rooms.html">Бронирование номеров</a></li>
+                <li><a href="conference.html">Конференц-залы</a></li>
+                <li><a href="spa.html">SPA-услуги</a></li>
+                <li><a href="#">Трансфер от/до аэропорта</a></li>
+                <li><a href="#">Ресторан</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Быстрые ссылки</h3>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="rooms.html">Номера</a></li>
+                <li><a href="conference.html">Конференц-залы</a></li>
+                <li><a href="spa.html">SPA-услуги</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section footer-contact">
+            <h3>Контакты</h3>
+            <p>📍 г. Москва, ул. Примерная, 45</p>
+            <p>📞 +7 (495) 555-33-22</p>
+            <p>✉️ info@atriumhotel.ru</p>
+            <p>🕒 Круглосуточно</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>© 2025 Гостиница «Атриум». Все права защищены.</p>
+    </div>
+</footer>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <img src="png/logo.png" alt="Atrium Logo" class="mobile-logo-img">
+        <button class="mobile-close" aria-label="Закрыть меню">✕</button>
+    </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">🏠 Главная</a>
+        <a href="rooms.html" class="mobile-nav-link active">🛏️ Номера</a>
+        <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>
+        <a href="news.html" class="mobile-nav-link">📰 Новости</a>
+        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
+    </nav>
+</div>
+
+<script>
+    // Конфигурация VK API
+    const VK_TOKEN = 'vk1.a.gaYPYBoWnugW2ATSxuWSKz0aps9NU17aJFjGj-VEtCCHxDFDAw0kGWwnGLRlWsxn80tHFT_Sl51eHWQXZLbH_9bpb0zjvn3q7y1Vz_6-2-1DuzmPpnk16E3OS9aJo0fC9TAcrVSZW9gf107veABAUMaqaP2I2qjzxnDpWrtNbguoqgbucDUoF5wuKxsaM3faqofc3NUNRetv_3XS6kLPlQ';
+    const GROUP_ID = '-233613781';
+    const POSTS_PER_PAGE = 9;
+    
+    let currentFilter = 'all';
+    let allPosts = [];
+    let filteredPosts = [];
+    
+    // JSONP функция для вызова VK API
+    function callVKAPI(method, params = {}) {
+        return new Promise((resolve, reject) => {
+            const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+            const script = document.createElement('script');
+            
+            const baseParams = {
+                access_token: VK_TOKEN,
+                v: '5.199'
+            };
+            
+            const allParams = { ...baseParams, ...params };
+            allParams.callback = callbackName;
+            
+            const paramString = Object.keys(allParams)
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(allParams[key])}`)
+                .join('&');
+            
+            const url = `https://api.vk.com/method/${method}?${paramString}`;
+            
+            window[callbackName] = function(data) {
+                delete window[callbackName];
+                document.body.removeChild(script);
+                
+                if (data.error) {
+                    reject(new Error(`VK API: ${data.error.error_msg} (код: ${data.error.error_code})`));
+                } else {
+                    resolve(data.response);
+                }
+            };
+            
+            script.onerror = function() {
+                delete window[callbackName];
+                document.body.removeChild(script);
+                reject(new Error('Ошибка загрузки скрипта VK API'));
+            };
+            
+            script.src = url;
+            document.body.appendChild(script);
+        });
+    }
+    
+    // Загрузка постов из ВК
+    async function loadVKPosts() {
+        try {
+            console.log('Загрузка постов из ВК...');
+            
+            const response = await callVKAPI('wall.get', {
+                owner_id: GROUP_ID,
+                count: 50,
+                filter: 'owner',
+                extended: 0
+            });
+            
+            allPosts = response.items || [];
+            
+            if (allPosts.length > 0) {
+                console.log(`Загружено ${allPosts.length} постов`);
+                document.getElementById('errorContainer').style.display = 'none';
+                document.getElementById('emptyState').style.display = 'none';
+                
+                filterPosts();
+            } else {
+                console.log('Постов нет');
+                showEmptyState();
+            }
+            
+        } catch (error) {
+            console.error('Ошибка загрузки постов:', error);
+            showError();
+        }
+    }
+    
+    // Фильтрация постов
+    function filterPosts() {
+        filteredPosts = [...allPosts];
+        
+        if (currentFilter !== 'all') {
+            const filterKeywords = {
+                'promo': ['акция', 'скидка', 'специальное', 'предложение', 'распродажа', '%', 'экономия', 'выгод'],
+                'event': ['мероприятие', 'событие', 'концерт', 'выставка', 'фестиваль', 'встреча', 'праздник'],
+                'update': ['обновление', 'новинка', 'открытие', 'ремонт', 'улучшение', 'новый', 'модернизация']
+            };
+            
+            const keywords = filterKeywords[currentFilter] || [];
+            filteredPosts = filteredPosts.filter(post => {
+                const text = (post.text || '').toLowerCase();
+                return keywords.some(keyword => text.includes(keyword));
+            });
+        }
+        
+        filteredPosts = filteredPosts.slice(0, POSTS_PER_PAGE);
+        renderPosts();
+    }
+    
+    // Обработка текста поста
+    function processPostText(text) {
+        if (!text) return '';
+        
+        let processed = text
+            .replace(/\[[^\]]+\|([^\]]+)\]/g, '$1')
+            .replace(/#[^\s#]+/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+        
+        if (processed.length > 120) {
+            processed = processed.substring(0, 117) + '...';
+        }
+        
+        return processed || 'Новость от отеля "Атриум"';
+    }
+    
+    // Отрисовка постов
+    function renderPosts() {
+        const postsContainer = document.getElementById('postsContainer');
+        
+        if (filteredPosts.length === 0) {
+            postsContainer.innerHTML = `
+                <div class="empty-state" style="display: block;">
+                    <i class="fas fa-filter"></i>
+                    <h3>Нет новостей по выбранному фильтру</h3>
+                    <button class="btn-primary" onclick="switchToAllFilter()" style="margin-top: 15px;">
+                        Показать все новости
+                    </button>
+                </div>
+            `;
+            return;
+        }
+        
+        let postsHTML = '';
+        
+        filteredPosts.forEach(post => {
+            if (post.marked_as_ads) return;
+            
+            const postDate = new Date(post.date * 1000);
+            const formattedDate = postDate.toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+            
+            const postText = processPostText(post.text);
+            let postTitle = 'Новость отеля';
+            if (post.text) {
+                const firstSentence = post.text.split(/[.!?]/)[0];
+                postTitle = firstSentence.length > 60 ? firstSentence.substring(0, 57) + '...' : firstSentence;
+            }
+            
+            let imageUrl = '';
+            if (post.attachments && post.attachments.length > 0) {
+                for (const attachment of post.attachments) {
+                    if (attachment.type === 'photo' && attachment.photo && attachment.photo.sizes) {
+                        const sizes = ['x', 'y', 'z', 'w', 'm'];
+                        for (const size of sizes) {
+                            const sizeObj = attachment.photo.sizes.find(s => s.type === size);
+                            if (sizeObj) {
+                                imageUrl = sizeObj.url;
+                                break;
+                            }
+                        }
+                        if (!imageUrl && attachment.photo.sizes.length > 0) {
+                            imageUrl = attachment.photo.sizes[attachment.photo.sizes.length - 1].url;
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            if (!imageUrl) {
+                imageUrl = 'png/default-news.jpg';
+            }
+            
+            const vkPostUrl = `https://vk.com/wall${GROUP_ID}_${post.id}`;
+            const likes = post.likes?.count || 0;
+            const comments = post.comments?.count || 0;
+            const reposts = post.reposts?.count || 0;
+            const views = post.views?.count || 0;
+            
+            postsHTML += `
+                <div class="news-item">
+                    <div class="news-image">
+                        <img src="${imageUrl}" alt="Изображение новости" loading="lazy"
+                             onerror="this.src=''">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">
+                            <i class="far fa-calendar"></i> ${formattedDate}
+                        </div>
+                        <h3 class="news-title">${postTitle}</h3>
+                        <div class="news-text">${postText}</div>
+                        <div class="news-stats">
+                            <div class="stat" title="Лайки">
+                                <i class="far fa-heart"></i> ${likes}
+                            </div>
+                            <div class="stat" title="Комментарии">
+                                <i class="far fa-comment"></i> ${comments}
+                            </div>
+                            <div class="stat" title="Репосты">
+                                <i class="fas fa-retweet"></i> ${reposts}
+                            </div>
+                        </div>
+                        <div class="news-actions">
+                            <a href="${vkPostUrl}" target="_blank" class="btn-vk">
+                                <i class="fab fa-vk"></i> Читать в ВК
+                            </a>
+                            <button class="btn-share share-btn" data-url="${vkPostUrl}" data-title="${postTitle}">
+                                <i class="fas fa-share"></i> Поделиться
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        postsContainer.innerHTML = postsHTML;
+        
+        // Обработчики кнопок "Поделиться"
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                const title = this.getAttribute('data-title');
+                sharePost(url, title);
+            });
+        });
+    }
+    
+    // Вспомогательные функции
+    function switchToAllFilter() {
+        currentFilter = 'all';
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+        filterPosts();
+    }
+    
+    function sharePost(url, title) {
+        const shareText = `Новость от отеля "Атриум": ${title}`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: 'Отель Атриум',
+                text: shareText,
+                url: url
+            });
+        } else {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('Ссылка на новость скопирована в буфер обмена!');
+            });
+        }
+    }
+    
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast show';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+    
+    function showError() {
+        document.getElementById('postsContainer').innerHTML = '';
+        document.getElementById('errorContainer').style.display = 'block';
+        document.getElementById('emptyState').style.display = 'none';
+    }
+    
+    function showEmptyState() {
+        document.getElementById('postsContainer').innerHTML = '';
+        document.getElementById('errorContainer').style.display = 'none';
+        document.getElementById('emptyState').style.display = 'block';
+    }
+    
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+        // Загрузка постов
+        loadVKPosts();
+        
+        // Обработчики фильтров
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.getAttribute('data-filter');
+                filterPosts();
+            });
+        });
+        
+        // Автообновление каждые 5 минут
+        setInterval(() => {
+            loadVKPosts();
+        }, 5 * 60 * 1000);
+    });
+    
+    // Глобальные функции
+    window.refreshNews = loadVKPosts;
+</script>
+
+<script src="scripts.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>

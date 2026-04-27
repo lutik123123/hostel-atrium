@@ -1,218 +1,259 @@
-// scripts.js - Основные скрипты для сайта отеля "Атриум"
+/* =======================================================
+   scripts.js — основной файл скриптов для сайта отеля "Атриум"
+   (обновлён: поддержка нового мобильного меню)
+   ======================================================= */
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded - initializing scripts');
-    
-    initializeMobileMenu();
-    initializeCalendar();
-    initializeAnimations();
-    initializeAttractionsSlider();
-    initializeFAQAccordion();
-    initializeVKPage();
-    
-    // Добавляем обработчики для модальных окон
-    initializeModalWindows();
-    
-    console.log('All scripts initialized successfully');
-});
+/* ---------- Helper to format date DD.MM.YYYY ---------- */
+function formatDate(date) {
+    let d = date.getDate().toString().padStart(2, "0");
+    let m = (date.getMonth() + 1).toString().padStart(2, "0");
+    let y = date.getFullYear();
+    return `${d}.${m}.${y}`;
+}
 
-// ================= MOBILE MENU =================
-function initializeMobileMenu() {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const overlay = document.querySelector('.mobile-menu-overlay');
-    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+/* ========================================================
+   CUSTOM CALENDAR CLASS WITH SMOOTH MONTH TRANSITION
+   ======================================================== */
 
-    if (menuToggle && mobileMenu && overlay) {
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+class CustomCalendar {
+    constructor(inputId, popupId, options = {}) {
+        this.input = document.getElementById(inputId);
+        this.popup = document.getElementById(popupId);
+        this.onSelect = options.onSelect || function () { };
+        this.date = new Date();
+        this.selected = null;
+        this.minDate = options.minDate || new Date();
+
+        this.buildCalendar();
+        this.attachEvents();
+    }
+
+    buildCalendar() {
+        const year = this.date.getFullYear();
+        const month = this.date.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
+        let html = `
+            <div class="calendar-header">
+                <button class="prev-month">&#10094;</button>
+                <div class="calendar-title">${this.getMonthName(month)} ${year}</div>
+                <button class="next-month">&#10095;</button>
+            </div>
+            <div class="calendar-weekdays">
+                ${weekdays.map(d => `<div>${d}</div>`).join("")}
+            </div>
+            <div class="calendar-days">
+        `;
+
+        let skip = (firstDay + 6) % 7;
+        for (let i = 0; i < skip; i++) {
+            html += `<div></div>`;
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            let fullDate = new Date(year, month, day);
+            let disabled = fullDate < this.minDate;
+            html += `
+                <div class="calendar-day ${disabled ? "disabled" : ""}"
+                     data-date="${fullDate}">
+                    ${day}
+                </div>`;
+        }
+
+        html += "</div>";
+        this.popup.innerHTML = html;
+
+        setTimeout(() => {
+            if (this.popup.querySelector('.calendar-days')) {
+                this.popup.querySelector('.calendar-days').style.opacity = '1';
+            }
+            if (this.popup.querySelector('.calendar-title')) {
+                this.popup.querySelector('.calendar-title').style.opacity = '1';
+            }
+        }, 50);
+    }
+
+    getMonthName(i) {
+        const names = [
+            "Январь","Февраль","Март","Апрель","Май","Июнь",
+            "Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"
+        ];
+        return names[i];
+    }
+
+    animateMonthChange(direction) {
+        const calendarDays = this.popup.querySelector('.calendar-days');
+        const calendarTitle = this.popup.querySelector('.calendar-title');
+        if (calendarDays) calendarDays.style.opacity = '0';
+        if (calendarTitle) calendarTitle.style.opacity = '0';
+
+        setTimeout(() => {
+            this.date.setMonth(this.date.getMonth() + direction);
+            this.buildCalendar();
+            this.attachEvents();
+        }, 200);
+    }
+
+    prevMonth() {
+        this.animateMonthChange(-1);
+    }
+
+    nextMonth() {
+        this.animateMonthChange(1);
+    }
+
+    open() {
+        document.querySelectorAll(".calendar-popup.open").forEach(p => {
+            if (p !== this.popup) p.classList.remove("open");
         });
+        this.popup.classList.add("open");
+    }
 
-        overlay.addEventListener('click', function() {
-            menuToggle.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            this.classList.remove('active');
-            document.body.style.overflow = '';
-        });
+    close() {
+        this.popup.classList.remove("open");
+    }
 
-        // Закрытие меню при клике на ссылку
-        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
+    attachEvents() {
+        this.input.addEventListener("click", () => this.open());
+
+        this.popup.querySelector(".prev-month")
+            .addEventListener("click", () => this.prevMonth());
+        this.popup.querySelector(".next-month")
+            .addEventListener("click", () => this.nextMonth());
+
+        this.popup.querySelectorAll(".calendar-day").forEach(day => {
+            day.addEventListener("click", () => {
+                if (day.classList.contains("disabled")) return;
+                let date = new Date(day.dataset.date);
+                this.selected = date;
+                this.input.value = formatDate(date);
+                this.onSelect(date);
+                this.close();
             });
         });
-        
-        console.log('Mobile menu initialized');
-    } else {
-        console.log('Mobile menu elements not found');
+
+        document.addEventListener("click", (e) => {
+            if (!this.input.contains(e.target) &&
+                !this.popup.contains(e.target)) {
+                this.close();
+            }
+        });
     }
 }
 
-// ================= CALENDAR =================
+/* =======================================================
+   ИНИЦИАЛИЗАЦИЯ КАЛЕНДАРЕЙ
+   ======================================================= */
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+let checkInCalendar, checkOutCalendar;
+
 function initializeCalendar() {
     const checkInInput = document.getElementById('checkIn');
     const checkOutInput = document.getElementById('checkOut');
     
     if (checkInInput && checkOutInput) {
-        // Устанавливаем начальные даты
-        setInitialDates();
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
         
-        // Создаем календари
-        createCalendar('checkIn', 'calendarIn');
-        createCalendar('checkOut', 'calendarOut');
+        checkInInput.value = formatDate(today);
+        checkOutInput.value = formatDate(tomorrow);
+        
+        checkInCalendar = new CustomCalendar("checkIn", "calendarIn", {
+            minDate: today,
+            onSelect: (date) => {
+                let nextDay = new Date(date);
+                nextDay.setDate(date.getDate() + 1);
+                checkOutCalendar.minDate = nextDay;
+                if (checkOutCalendar.selected < nextDay) {
+                    checkOutCalendar.selected = nextDay;
+                    document.getElementById("checkOut").value = formatDate(nextDay);
+                }
+            }
+        });
+
+        checkOutCalendar = new CustomCalendar("checkOut", "calendarOut", {
+            minDate: today
+        });
         
         console.log('Calendar initialized');
     }
 }
 
-function setInitialDates() {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    
-    document.getElementById('checkIn').value = formatDate(today);
-    document.getElementById('checkOut').value = formatDate(tomorrow);
+/* =======================================================
+   TOAST
+   ======================================================= */
+
+function showToast(msg, type = 'success') {
+    let toast = document.getElementById("toastSuccess");
+    if (!toast) {
+        toast = document.getElementById("toast");
+    }
+    if (toast) {
+        toast.textContent = msg;
+        toast.className = `toast-success ${type}`;
+        toast.classList.add("show");
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 2500);
+    }
 }
 
-function formatDate(date) {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
-}
+/* =======================================================
+   BOOKING FORM
+   ======================================================= */
 
-function createCalendar(inputId, calendarId) {
-    const input = document.getElementById(inputId);
-    const calendar = document.getElementById(calendarId);
-    
-    if (!input || !calendar) return;
-    
-    input.addEventListener('focus', function() {
-        // Закрываем другие календари
-        document.querySelectorAll('.calendar-popup').forEach(popup => {
-            if (popup.id !== calendarId) {
-                popup.classList.remove('open');
+function initializeBookingForm() {
+    const bookingForm = document.getElementById("bookingForm");
+    if (bookingForm) {
+        bookingForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let inVal = document.getElementById("checkIn").value.trim();
+            let outVal = document.getElementById("checkOut").value.trim();
+            let guests = document.getElementById("guests").value;
+            if (!inVal || !outVal || !guests) {
+                showToast("Заполните все поля", "error");
+                return;
             }
+            
+            showToast("Поиск доступных номеров...", "info");
+            
+            setTimeout(() => {
+                const params = new URLSearchParams({
+                    checkin: inVal,
+                    checkout: outVal,
+                    guests: guests
+                });
+                window.location.href = "rooms.html?" + params.toString();
+            }, 1200);
         });
-        // Открываем текущий
-        calendar.classList.add('open');
-        renderCalendar(calendar, inputId);
-    });
+    }
+}
+
+/* =======================================================
+   ANIMATIONS
+   ======================================================= */
+
+function animateOnScroll() {
+    let blocks = document.querySelectorAll(".fade-block");
+    let windowHeight = window.innerHeight;
     
-    // Закрытие календаря при клике вне его
-    document.addEventListener('click', function(e) {
-        if (!input.contains(e.target) && !calendar.contains(e.target)) {
-            calendar.classList.remove('open');
+    blocks.forEach(block => {
+        let elementTop = block.getBoundingClientRect().top;
+        let elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+            block.classList.add("show-anim");
         }
     });
 }
 
-function renderCalendar(calendar, type) {
-    const today = new Date();
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
-    
-    // Заголовок календаря
-    calendar.innerHTML = `
-        <div class="calendar-header">
-            <button class="prev-month"><i class="fas fa-chevron-left"></i></button>
-            <div class="calendar-title">${getMonthName(currentMonth)} ${currentYear}</div>
-            <button class="next-month"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        <div class="calendar-weekdays">
-            <div>Пн</div>
-            <div>Вт</div>
-            <div>Ср</div>
-            <div>Чт</div>
-            <div>Пт</div>
-            <div>Сб</div>
-            <div>Вс</div>
-        </div>
-        <div class="calendar-days"></div>
-    `;
-    
-    const daysContainer = calendar.querySelector('.calendar-days');
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    
-    // Корректировка для понедельника как первого дня
-    let startDay = firstDay === 0 ? 6 : firstDay - 1;
-    
-    // Пустые ячейки для начала месяца
-    for (let i = 0; i < startDay; i++) {
-        const emptyDay = document.createElement('div');
-        emptyDay.className = 'calendar-day disabled';
-        emptyDay.textContent = '';
-        daysContainer.appendChild(emptyDay);
-    }
-    
-    // Дни месяца
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dayElement = document.createElement('div');
-        dayElement.className = 'calendar-day';
-        dayElement.textContent = day;
-        
-        const date = new Date(currentYear, currentMonth, day);
-        if (date < new Date().setHours(0,0,0,0)) {
-            dayElement.classList.add('disabled');
-        } else {
-            dayElement.addEventListener('click', function() {
-                selectDate(day, currentMonth, currentYear, type);
-            });
-        }
-        
-        daysContainer.appendChild(dayElement);
-    }
-    
-    // Обработчики для кнопок переключения месяцев
-    calendar.querySelector('.prev-month').addEventListener('click', function() {
-        // Здесь можно добавить логику для переключения на предыдущий месяц
-        console.log('Previous month clicked');
-    });
-    
-    calendar.querySelector('.next-month').addEventListener('click', function() {
-        // Здесь можно добавить логику для переключения на следующий месяц
-        console.log('Next month clicked');
-    });
-}
-
-function selectDate(day, month, year, type) {
-    const dateStr = `${day.toString().padStart(2, '0')}.${(month + 1).toString().padStart(2, '0')}.${year}`;
-    document.getElementById(type === 'checkIn' ? 'checkIn' : 'checkOut').value = dateStr;
-    document.getElementById(type === 'checkIn' ? 'calendarIn' : 'calendarOut').classList.remove('open');
-    
-    // Если выбрана дата заезда, обновляем минимальную дату для выезда
-    if (type === 'checkIn') {
-        const checkInDate = new Date(year, month, day);
-        setMinDateForCheckout(checkInDate);
-    }
-}
-
-function setMinDateForCheckout(minDate) {
-    // Можно добавить логику для установки минимальной даты в календаре выезда
-    console.log('Setting min date for checkout:', minDate);
-}
-
-function getMonthName(monthIndex) {
-    const months = [
-        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-    ];
-    return months[monthIndex];
-}
-
-// ================= ANIMATIONS =================
 function initializeAnimations() {
     const fadeBlocks = document.querySelectorAll('.fade-block');
-    
-    // Сразу показываем блоки если страница уже загружена
     setTimeout(() => {
         document.body.classList.add('loaded');
     }, 100);
@@ -232,158 +273,412 @@ function initializeAnimations() {
         observer.observe(block);
     });
     
+    window.addEventListener("scroll", animateOnScroll);
     console.log('Animations initialized');
 }
 
-// ================= ATTRACTIONS SLIDER =================
+/* ========================================================
+   ATTRACTIONS SLIDER
+   ======================================================== */
+
+let currentAttractionSlide = 0;
+let attractionAutoPlayInterval;
+
 function initializeAttractionsSlider() {
     const slides = document.querySelectorAll('.attraction-slide');
-    const dots = document.querySelectorAll('.dot');
-    const prevBtn = document.querySelector('.slider-nav-btn.prev');
-    const nextBtn = document.querySelector('.slider-nav-btn.next');
-    
+    const dots = document.querySelectorAll('.slider-dots .dot');
     if (slides.length === 0) return;
     
-    let currentSlide = 0;
-    
-    function showSlide(n) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
-        
-        currentSlide = (n + slides.length) % slides.length;
-        
-        slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
-    }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            showSlide(currentSlide - 1);
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            showSlide(currentSlide + 1);
-        });
-    }
-    
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            showSlide(index);
-        });
-    });
-    
-    // Автопрокрутка каждые 5 секунд
-    setInterval(() => {
-        showSlide(currentSlide + 1);
-    }, 5000);
-    
+    showAttractionSlide(0);
+    startAttractionSliderAutoPlay();
+    setupSliderHover();
     console.log('Attractions slider initialized');
 }
 
-// Глобальные функции для слайдера
-window.prevAttraction = function() {
+function showAttractionSlide(index) {
     const slides = document.querySelectorAll('.attraction-slide');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+    const dots = document.querySelectorAll('.slider-dots .dot');
+    if (slides.length === 0) return;
     
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
-};
-
-window.nextAttraction = function() {
-    const slides = document.querySelectorAll('.attraction-slide');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
-    
-    currentSlide = (currentSlide + 1) % slides.length;
-    
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
-};
-
-window.goToSlide = function(index) {
-    const slides = document.querySelectorAll('.attraction-slide');
-    const dots = document.querySelectorAll('.dot');
-    
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-};
-
-// ================= FAQ ACCORDION =================
-function initializeFAQAccordion() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const toggle = item.querySelector('.faq-toggle');
-        
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            
-            // Закрываем все остальные
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
-            });
-            
-            // Переключаем текущий
-            if (!isActive) {
-                item.classList.add('active');
-            }
-        });
-        
-        // Также обрабатываем клик по самому toggle
-        if (toggle) {
-            toggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isActive = item.classList.contains('active');
-                
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
+    slides.forEach(slide => {
+        if (slide.classList.contains('active')) {
+            slide.style.opacity = '0';
+            setTimeout(() => {
+                slide.classList.remove('active');
+            }, 300);
         }
     });
     
-    console.log('FAQ accordion initialized');
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    setTimeout(() => {
+        slides[index].classList.add('active');
+        setTimeout(() => {
+            slides[index].style.opacity = '1';
+        }, 50);
+    }, 300);
+    
+    dots[index].classList.add('active');
+    currentAttractionSlide = index;
 }
 
-// ================= VK PAGE INITIALIZATION =================
+function nextAttraction() {
+    const slides = document.querySelectorAll('.attraction-slide');
+    if (slides.length === 0) return;
+    currentAttractionSlide = (currentAttractionSlide + 1) % slides.length;
+    showAttractionSlide(currentAttractionSlide);
+}
+
+function prevAttraction() {
+    const slides = document.querySelectorAll('.attraction-slide');
+    if (slides.length === 0) return;
+    currentAttractionSlide = (currentAttractionSlide - 1 + slides.length) % slides.length;
+    showAttractionSlide(currentAttractionSlide);
+}
+
+function goToSlide(index) {
+    showAttractionSlide(index);
+}
+
+function startAttractionSliderAutoPlay() {
+    if (attractionAutoPlayInterval) clearInterval(attractionAutoPlayInterval);
+    attractionAutoPlayInterval = setInterval(() => {
+        nextAttraction();
+    }, 5000);
+}
+
+function setupSliderHover() {
+    const slider = document.querySelector('.attractions-slider');
+    if (slider) {
+        slider.addEventListener('mouseenter', () => {
+            if (attractionAutoPlayInterval) clearInterval(attractionAutoPlayInterval);
+        });
+        slider.addEventListener('mouseleave', () => {
+            startAttractionSliderAutoPlay();
+        });
+    }
+}
+
+/* =======================================================
+   FAQ ACCORDION
+   ======================================================= */
+
+function initializeFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', function() {
+            const isActive = item.classList.contains('active');
+            faqItems.forEach(other => other.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        });
+    });
+}
+
+/* =======================================================
+   MOBILE MENU FUNCTIONALITY (ОБНОВЛЁННАЯ)
+   ======================================================= */
+
+function initializeMobileMenu() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+    const mobileClose = document.querySelector('.mobile-close');   // крестик
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+    const fullVersionBtn = document.querySelector('.mobile-full-version');
+
+    function openMenu() {
+        if (menuToggle) menuToggle.classList.add('active');
+        if (mobileMenu) mobileMenu.classList.add('active');
+        if (mobileOverlay) mobileOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        if (menuToggle) menuToggle.classList.remove('active');
+        if (mobileMenu) mobileMenu.classList.remove('active');
+        if (mobileOverlay) mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Бургер
+    if (menuToggle) {
+        menuToggle.addEventListener('click', openMenu);
+    }
+
+    // Оверлей
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', closeMenu);
+    }
+
+    // Крестик
+    if (mobileClose) {
+        mobileClose.addEventListener('click', closeMenu);
+    }
+
+    // Ссылки меню
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // "Полная версия" обрабатывается отдельно, не закрываем меню сразу
+            if (link.classList.contains('mobile-full-version')) return;
+            closeMenu();
+        });
+    });
+
+    // Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+
+    // Кнопка "Полная версия сайта"
+    if (fullVersionBtn) {
+        fullVersionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Отключаем мобильные стили (если mobile.css подключён с media)
+            const mobileCss = document.querySelector('link[href="mobile.css"]');
+            if (mobileCss) {
+                mobileCss.removeAttribute('media');
+            }
+            // Добавляем класс для десктопного отображения (на случай встроенных стилей)
+            document.body.classList.add('desktop-view');
+            // Сохраняем выбор
+            localStorage.setItem('desktopView', 'true');
+            closeMenu();
+        });
+    }
+
+    // При загрузке проверяем, не выбрана ли полная версия ранее
+    if (localStorage.getItem('desktopView') === 'true') {
+        const mobileCss = document.querySelector('link[href="mobile.css"]');
+        if (mobileCss) mobileCss.removeAttribute('media');
+        document.body.classList.add('desktop-view');
+    }
+
+    console.log('Mobile menu initialized (expanded)');
+}
+
+/* =======================================================
+   ROOM SLIDER FUNCTIONALITY
+   ======================================================= */
+
+function nextSlide(id) {
+    const slider = document.getElementById(id);
+    if (!slider) return;
+    const slides = slider.querySelectorAll('img');
+    const indicators = slider.querySelectorAll('.slider-indicator');
+    let currentIndex = Array.from(slides).findIndex(s => s.classList.contains("active"));
+    slides[currentIndex].classList.remove("active");
+    if (indicators[currentIndex]) indicators[currentIndex].classList.remove("active");
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add("active");
+    if (indicators[currentIndex]) indicators[currentIndex].classList.add("active");
+}
+
+function prevSlide(id) {
+    const slider = document.getElementById(id);
+    if (!slider) return;
+    const slides = slider.querySelectorAll('img');
+    const indicators = slider.querySelectorAll('.slider-indicator');
+    let currentIndex = Array.from(slides).findIndex(s => s.classList.contains("active"));
+    slides[currentIndex].classList.remove("active");
+    if (indicators[currentIndex]) indicators[currentIndex].classList.remove("active");
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    slides[currentIndex].classList.add("active");
+    if (indicators[currentIndex]) indicators[currentIndex].classList.add("active");
+}
+
+function showSlide(id, index) {
+    const slider = document.getElementById(id);
+    if (!slider) return;
+    const slides = slider.querySelectorAll('img');
+    const indicators = slider.querySelectorAll('.slider-indicator');
+    slides.forEach(slide => slide.classList.remove("active"));
+    indicators.forEach(indicator => indicator.classList.remove("active"));
+    if (slides[index]) slides[index].classList.add("active");
+    if (indicators[index]) indicators[index].classList.add("active");
+}
+
+function initializeRoomSliders() {
+    const roomSliders = document.querySelectorAll('.room-slider');
+    roomSliders.forEach(slider => {
+        const images = slider.querySelectorAll('img');
+        const prevBtn = slider.querySelector('.slider-btn.left');
+        const nextBtn = slider.querySelector('.slider-btn.right');
+        const indicators = slider.querySelectorAll('.slider-indicator');
+        if (images.length > 0) {
+            images[0].classList.add('active');
+            if (indicators[0]) indicators[0].classList.add('active');
+            let currentIndex = 0;
+
+            function showImage(index) {
+                images.forEach(img => img.classList.remove('active'));
+                indicators.forEach(indicator => indicator.classList.remove('active'));
+                images[index].classList.add('active');
+                if (indicators[index]) indicators[index].classList.add('active');
+                currentIndex = index;
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    let newIndex = currentIndex - 1;
+                    if (newIndex < 0) newIndex = images.length - 1;
+                    showImage(newIndex);
+                });
+            }
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    let newIndex = currentIndex + 1;
+                    if (newIndex >= images.length) newIndex = 0;
+                    showImage(newIndex);
+                });
+            }
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    showImage(index);
+                });
+            });
+
+            if (images.length > 1) {
+                setInterval(() => {
+                    let newIndex = currentIndex + 1;
+                    if (newIndex >= images.length) newIndex = 0;
+                    showImage(newIndex);
+                }, 4000);
+            }
+        }
+    });
+}
+
+/* =======================================================
+   UNIFIED MODAL FUNCTIONALITY (ALL MODALS)
+   ======================================================= */
+
+function initializeModalWindows() {
+    setupModalHandlers('.premium-modal', '.premium-close-modal');
+    setupModalHandlers('.room-modal', '.close-modal');
+    setupModalHandlers('.service-modal', '.service-close-modal');
+    setupModalHandlers('.swiss-modal', '.swiss-close-modal');
+    setTimeout(initModalGalleries, 100);
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('premium-modal') || 
+            e.target.classList.contains('room-modal') || 
+            e.target.classList.contains('service-modal') || 
+            e.target.classList.contains('swiss-modal')) {
+            closeModal(e.target);
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeAllModals();
+    });
+}
+
+function setupModalHandlers(modalSelector, closeSelector) {
+    document.querySelectorAll(closeSelector).forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const modal = this.closest(modalSelector);
+            if (modal) closeModal(modal);
+        });
+    });
+}
+
+function closeModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function closeAllModals() {
+    document.querySelectorAll('.premium-modal, .room-modal, .service-modal, .swiss-modal').forEach(modal => {
+        closeModal(modal);
+    });
+}
+
+function openPremiumModal(modalType) {
+    const modalId = `modal-${modalType}`;
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        closeAllModals();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function openServiceModal(serviceType) {
+    openPremiumModal(serviceType);
+}
+
+function openRoomModal(roomType) {
+    const modalId = `modal-${roomType.toLowerCase().replace(' ', '-')}`;
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        closeAllModals();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+/* =======================================================
+   GALLERY FUNCTIONALITY FOR MODALS
+   ======================================================= */
+
+function initModalGalleries() {
+    document.querySelectorAll('.premium-modal').forEach(modal => {
+        const mainImage = modal.querySelector('.premium-main-image');
+        const sideImages = modal.querySelectorAll('.premium-side-image');
+        if (mainImage && sideImages.length > 0) {
+            sideImages.forEach((sideImage) => {
+                sideImage.addEventListener('click', function() {
+                    const tempSrc = mainImage.style.backgroundImage;
+                    mainImage.style.backgroundImage = this.style.backgroundImage;
+                    this.style.backgroundImage = tempSrc;
+                    mainImage.style.opacity = '0';
+                    setTimeout(() => { mainImage.style.opacity = '1'; }, 150);
+                });
+            });
+        }
+    });
+}
+
+/* =======================================================
+   FORM VALIDATION
+   ======================================================= */
+
+function initializeFormValidation() {
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const requiredInputs = this.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            requiredInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.style.borderColor = '#ff6b6b';
+                    input.addEventListener('input', function() {
+                        this.style.borderColor = '';
+                    });
+                }
+            });
+            if (!isValid) {
+                e.preventDefault();
+                showToast('Пожалуйста, заполните все обязательные поля', 'error');
+            }
+        });
+    });
+}
+
+/* =======================================================
+   VK PAGE INITIALIZATION
+   ======================================================= */
+
 function initializeVKPage() {
-    // Если мы на странице vk.html, добавляем специфичную инициализацию
     if (window.location.pathname.includes('vk.html')) {
-        console.log('Initializing VK page');
-        
-        // Обновляем активную ссылку в навигации
         updateActiveNavLink('vk.html');
-        
-        // Инициализируем функционал VK страницы
         initializeVKFunctionality();
     }
 }
 
 function updateActiveNavLink(activePage) {
-    // Обновляем десктопное меню
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         if (link.getAttribute('href') === activePage) {
@@ -392,8 +687,6 @@ function updateActiveNavLink(activePage) {
             link.classList.remove('active');
         }
     });
-    
-    // Обновляем мобильное меню
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
     mobileNavLinks.forEach(link => {
         if (link.getAttribute('href') === activePage) {
@@ -405,35 +698,25 @@ function updateActiveNavLink(activePage) {
 }
 
 function initializeVKFunctionality() {
-    // Здесь можно добавить специфичный функционал для страницы VK
     const publishBtn = document.getElementById('publishBtn');
     const previewBtn = document.getElementById('previewBtn');
-    
     if (publishBtn) {
         publishBtn.addEventListener('click', function() {
-            // Эмуляция публикации
             this.classList.add('button-loading');
             this.disabled = true;
-            
             setTimeout(() => {
                 this.classList.remove('button-loading');
                 this.disabled = false;
-                
-                // Показываем уведомление об успехе
                 const successMessage = document.getElementById('successMessage');
                 if (successMessage) {
                     successMessage.style.display = 'block';
-                    setTimeout(() => {
-                        successMessage.style.display = 'none';
-                    }, 3000);
+                    setTimeout(() => { successMessage.style.display = 'none'; }, 3000);
                 }
             }, 2000);
         });
     }
-    
     if (previewBtn) {
         previewBtn.addEventListener('click', function() {
-            // Эмуляция предпросмотра
             const postText = document.getElementById('postText');
             if (postText && postText.value.trim()) {
                 alert('Предпросмотр поста:\n\n' + postText.value);
@@ -442,11 +725,8 @@ function initializeVKFunctionality() {
             }
         });
     }
-    
-    // Инициализация переключателя расписания
     const scheduleToggle = document.getElementById('scheduleToggle');
     const datetimeInput = document.getElementById('datetimeInput');
-    
     if (scheduleToggle && datetimeInput) {
         scheduleToggle.addEventListener('change', function() {
             if (this.checked) {
@@ -456,164 +736,12 @@ function initializeVKFunctionality() {
             }
         });
     }
-    
-    console.log('VK functionality initialized');
 }
 
-// ================= MODAL WINDOWS =================
-function initializeModalWindows() {
-    // Закрытие модальных окон при клике на overlay
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('premium-modal') || 
-            e.target.classList.contains('room-modal') || 
-            e.target.classList.contains('service-modal') || 
-            e.target.classList.contains('swiss-modal')) {
-            e.target.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-    
-    // Закрытие модальных окон при клике на кнопку закрытия
-    document.querySelectorAll('.close-modal, .swiss-close-modal, .premium-close-modal').forEach(closeBtn => {
-        closeBtn.addEventListener('click', function() {
-            const modal = this.closest('.premium-modal, .room-modal, .service-modal, .swiss-modal');
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    });
-    
-    // Закрытие модальных окон при нажатии Escape
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.premium-modal, .room-modal, .service-modal, .swiss-modal').forEach(modal => {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        }
-    });
-    
-    console.log('Modal windows initialized');
-}
+/* =======================================================
+   GLOBAL FUNCTIONS AND UTILITIES
+   ======================================================= */
 
-// ================= ROOM SLIDERS =================
-function initializeRoomSliders() {
-    const roomSliders = document.querySelectorAll('.room-slider');
-    
-    roomSliders.forEach(slider => {
-        const images = slider.querySelectorAll('img');
-        const prevBtn = slider.querySelector('.slider-btn.left');
-        const nextBtn = slider.querySelector('.slider-btn.right');
-        const indicators = slider.querySelectorAll('.slider-indicator');
-        
-        if (images.length > 1) {
-            let currentIndex = 0;
-            
-            function showImage(index) {
-                images.forEach(img => img.classList.remove('active'));
-                indicators.forEach(indicator => indicator.classList.remove('active'));
-                
-                images[index].classList.add('active');
-                if (indicators[index]) {
-                    indicators[index].classList.add('active');
-                }
-                
-                currentIndex = index;
-            }
-            
-            if (prevBtn) {
-                prevBtn.addEventListener('click', () => {
-                    let newIndex = currentIndex - 1;
-                    if (newIndex < 0) newIndex = images.length - 1;
-                    showImage(newIndex);
-                });
-            }
-            
-            if (nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    let newIndex = currentIndex + 1;
-                    if (newIndex >= images.length) newIndex = 0;
-                    showImage(newIndex);
-                });
-            }
-            
-            indicators.forEach((indicator, index) => {
-                indicator.addEventListener('click', () => {
-                    showImage(index);
-                });
-            });
-            
-            // Автопрокрутка
-            setInterval(() => {
-                let newIndex = currentIndex + 1;
-                if (newIndex >= images.length) newIndex = 0;
-                showImage(newIndex);
-            }, 4000);
-        }
-    });
-    
-    console.log('Room sliders initialized');
-}
-
-// Инициализация слайдеров комнат когда DOM готов
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeRoomSliders);
-} else {
-    initializeRoomSliders();
-}
-
-// ================= FORM VALIDATION =================
-function initializeFormValidation() {
-    const forms = document.querySelectorAll('form');
-    
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            const requiredInputs = this.querySelectorAll('input[required], select[required], textarea[required]');
-            let isValid = true;
-            
-            requiredInputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = '#ff6b6b';
-                    
-                    // Убираем красную обводку когда пользователь начинает вводить
-                    input.addEventListener('input', function() {
-                        this.style.borderColor = '';
-                    });
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                alert('Пожалуйста, заполните все обязательные поля');
-            }
-        });
-    });
-    
-    console.log('Form validation initialized');
-}
-
-// Инициализация валидации форм
-initializeFormValidation();
-
-// ================= UTILITY FUNCTIONS =================
-
-// Показ уведомлений
-window.showToast = function(message, type = 'success') {
-    const toast = document.getElementById('toastSuccess');
-    if (toast) {
-        toast.textContent = message;
-        toast.className = `toast-success ${type}`;
-        toast.classList.add('show');
-        
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
-};
-
-// Форматирование цены
 window.formatPrice = function(price) {
     return new Intl.NumberFormat('ru-RU', {
         style: 'currency',
@@ -622,12 +750,10 @@ window.formatPrice = function(price) {
     }).format(price);
 };
 
-// Проверка мобильного устройства
 window.isMobile = function() {
     return window.innerWidth <= 768;
 };
 
-// Адаптивное поведение
 window.addEventListener('resize', function() {
     if (window.isMobile()) {
         document.body.classList.add('mobile');
@@ -636,9 +762,43 @@ window.addEventListener('resize', function() {
     }
 });
 
-// Инициализация адаптивности
-if (window.isMobile()) {
-    document.body.classList.add('mobile');
-}
+window.openPremiumModal = openPremiumModal;
+window.openServiceModal = openServiceModal;
+window.openRoomModal = openRoomModal;
+window.closeAllModals = closeAllModals;
+window.showToast = showToast;
+window.nextAttraction = nextAttraction;
+window.prevAttraction = prevAttraction;
+window.goToSlide = goToSlide;
+window.nextSlide = nextSlide;
+window.prevSlide = prevSlide;
+window.showSlide = showSlide;
 
-console.log('All utility functions initialized');
+/* =======================================================
+   MAIN INITIALIZATION
+   ======================================================= */
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - initializing all features');
+    
+    initializeMobileMenu();      // обновлённая версия
+    initializeCalendar();
+    initializeBookingForm();
+    initializeAnimations();
+    initializeAttractionsSlider();
+    initializeFAQ();
+    initializeModalWindows();
+    initializeRoomSliders();
+    initializeFormValidation();
+    initializeVKPage();
+    
+    console.log('All scripts initialized successfully');
+});
+
+window.addEventListener("load", function() {
+    document.body.classList.add("loaded");
+    setTimeout(animateOnScroll, 100);
+    if (window.isMobile()) {
+        document.body.classList.add('mobile');
+    }
+});

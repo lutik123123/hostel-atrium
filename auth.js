@@ -28,7 +28,6 @@ class AuthManager {
         console.log('AuthManager init called');
         this.checkAuthState();
         this.setupEventListeners();
-        this.setupBookingForm();
         console.log('AuthManager инициализирован');
     }
 
@@ -131,10 +130,8 @@ class AuthManager {
                 console.log('Login button clicked, current user:', this.currentUser);
                 
                 if (this.currentUser) {
-                    // ПЕРЕХОД В ПРОФИЛЬ ПРИ КЛИКЕ НА АВАТАР
                     window.location.href = 'profile.html';
                 } else {
-                    // ПЕРЕХОД НА СТРАНИЦУ АВТОРИЗАЦИИ
                     window.location.href = 'authorization.html';
                 }
             });
@@ -147,23 +144,14 @@ class AuthManager {
                 e.preventDefault();
                 
                 if (this.currentUser) {
-                    // ПЕРЕХОД В ПРОФИЛЬ ПРИ КЛИКЕ НА АВАТАР В МОБИЛЬНОМ МЕНЮ
                     window.location.href = 'profile.html';
                 } else {
-                    // ПЕРЕХОД НА СТРАНИЦУ АВТОРИЗАЦИИ
                     window.location.href = 'authorization.html';
                 }
             });
         }
 
         console.log('Event listeners setup complete');
-    }
-
-    setupBookingForm() {
-        const bookingForm = document.getElementById('bookingForm');
-        if (bookingForm) {
-            bookingForm.addEventListener('submit', (e) => this.handleQuickBooking(e));
-        }
     }
 
     handleQuickBooking(e) {
@@ -177,7 +165,7 @@ class AuthManager {
             guests: formData.get('guests')
         };
         
-        this.handleRoomBooking(bookingData);
+        this.redirectToBookingPage(bookingData);
     }
 
     handleLogin(email, password) {
@@ -246,15 +234,6 @@ class AuthManager {
         this.currentUser = user;
         localStorage.setItem('current_user', JSON.stringify(user));
         this.updateUI();
-        
-        // Если есть отложенное бронирование, выполняем его
-        if (this.pendingBooking) {
-            setTimeout(() => {
-                if (this.createBooking(this.pendingBooking)) {
-                    this.pendingBooking = null;
-                }
-            }, 1000);
-        }
     }
 
     logout() {
@@ -301,7 +280,6 @@ class AuthManager {
         console.log('Mobile login button found:', !!mobileLoginBtn);
         
         if (this.currentUser) {
-            // Показываем профиль пользователя в десктопном меню
             if (loginBtn) {
                 loginBtn.innerHTML = `
                     <div class="user-profile">
@@ -313,7 +291,6 @@ class AuthManager {
                 console.log('Desktop login button updated with user profile');
             }
 
-            // Обновляем мобильное меню
             if (mobileLoginBtn) {
                 mobileLoginBtn.innerHTML = `
                     <div class="user-profile">
@@ -324,37 +301,41 @@ class AuthManager {
                 mobileLoginBtn.classList.add('user-profile-btn');
                 console.log('Mobile login button updated with user profile');
             }
-
-            // ДОБАВЛЯЕМ КНОПКУ VK В НАВИГАЦИЮ ДЛЯ АДМИНИСТРАТОРА
+            // Обновляем новую мобильную ссылку (в меню с иконками)
+            const mobileLoginLink = document.querySelector('.mobile-nav-link[href="authorization.html"]');
+            if (mobileLoginLink) {
+                if (this.currentUser) {
+                    mobileLoginLink.innerHTML = `👤 ${this.currentUser.firstName}`;
+                    mobileLoginLink.href = 'profile.html';   // ссылка на личный кабинет
+                } else {
+                    mobileLoginLink.innerHTML = '🔐 Войти';
+                    mobileLoginLink.href = 'authorization.html';
+                }
+                }
             this.updateVkNavigation();
 
         } else {
-            // Показываем кнопку входа в десктопном меню
             if (loginBtn) {
                 loginBtn.innerHTML = 'Войти';
                 loginBtn.classList.remove('user-profile-btn');
                 console.log('Desktop login button reset to "Войти"');
             }
 
-            // Показываем кнопку входа в мобильном меню
             if (mobileLoginBtn) {
                 mobileLoginBtn.innerHTML = 'Войти';
                 mobileLoginBtn.classList.remove('user-profile-btn');
                 console.log('Mobile login button reset to "Войти"');
             }
 
-            // Скрываем кнопку VK при выходе
             this.hideVkNavigation();
         }
         
-        // ОБНОВЛЯЕМ ПРОФИЛЬ, ЕСЛИ МЫ НА СТРАНИЦЕ ПРОФИЛЯ
         if (window.location.pathname.includes('profile.html')) {
             console.log('We are on profile page, updating profile...');
             this.updateProfilePage();
         }
     }
 
-    // Обновление навигации VK
     updateVkNavigation() {
         const isAdmin = this.currentUser && this.currentUser.role === 'admin';
         console.log('Updating VK navigation, is admin:', isAdmin);
@@ -366,9 +347,7 @@ class AuthManager {
         }
     }
 
-    // Добавляем кнопку VK в навигацию
     addVkButtonToNavigation() {
-        // Десктопная навигация
         const desktopNav = document.querySelector('.nav nav');
         if (desktopNav && !desktopNav.querySelector('.vk-nav-btn')) {
             const vkButton = document.createElement('a');
@@ -377,18 +356,15 @@ class AuthManager {
             vkButton.innerHTML = '<i class="fab fa-vk"></i> VK';
             vkButton.style.cssText = 'background: #2c5aa0; color: white; border-radius: 8px; padding: 8px 16px; margin-left: 10px;';
             
-            // Вставляем после ссылки "Контакты"
             const contactsLink = desktopNav.querySelector('a[href="contacts.html"]');
             if (contactsLink) {
                 contactsLink.parentNode.insertBefore(vkButton, contactsLink.nextSibling);
             } else {
-                // Если ссылка контактов не найдена, добавляем в конец
                 desktopNav.appendChild(vkButton);
             }
             console.log('VK button added to desktop navigation');
         }
 
-        // Мобильная навигация
         const mobileNav = document.querySelector('.mobile-nav');
         if (mobileNav && !mobileNav.querySelector('.mobile-vk-nav-btn')) {
             const mobileVkButton = document.createElement('a');
@@ -397,12 +373,10 @@ class AuthManager {
             mobileVkButton.innerHTML = '<i class="fab fa-vk"></i> VK';
             mobileVkButton.style.cssText = 'background: #2c5aa0; color: white; border-radius: 8px; padding: 12px 16px; margin: 10px 0; text-align: center;';
             
-            // Вставляем после ссылки "Контакты" в мобильном меню
             const mobileContactsLink = mobileNav.querySelector('a[href="contacts.html"]');
             if (mobileContactsLink) {
                 mobileContactsLink.parentNode.insertBefore(mobileVkButton, mobileContactsLink.nextSibling);
             } else {
-                // Если ссылка контактов не найдена, добавляем перед кнопкой входа
                 const loginLink = mobileNav.querySelector('a[href="authorization.html"]');
                 if (loginLink) {
                     mobileNav.insertBefore(mobileVkButton, loginLink);
@@ -414,7 +388,6 @@ class AuthManager {
         }
     }
 
-    // Скрываем кнопки VK
     hideVkNavigation() {
         const vkButtons = document.querySelectorAll('.vk-nav-btn, .mobile-vk-nav-btn');
         vkButtons.forEach(btn => {
@@ -426,7 +399,6 @@ class AuthManager {
     updateProfilePage() {
         console.log('=== updateProfilePage called ===');
         
-        // Проверяем, находимся ли мы на странице профиля
         const profileSection = document.querySelector('.profile-section');
         console.log('Profile section found:', !!profileSection);
         
@@ -435,7 +407,6 @@ class AuthManager {
             return;
         }
         
-        // Если пользователь не авторизован, перенаправляем на страницу входа
         if (!this.currentUser) {
             console.log('No current user, redirecting to login');
             window.location.href = 'authorization.html';
@@ -444,7 +415,6 @@ class AuthManager {
         
         console.log('Updating profile page for user:', this.currentUser);
         
-        // Обновляем основную информацию
         const profileElements = {
             'profileAvatar': this.getUserInitials(),
             'profileName': `${this.currentUser.firstName} ${this.currentUser.lastName}`,
@@ -454,7 +424,6 @@ class AuthManager {
             'profilePhone': this.currentUser.phone,
             'profileRole': this.currentUser.role === 'admin' ? 'Администратор' : 'Клиент',
             'profileJoinDate': `Зарегистрирован: ${new Date(this.currentUser.registrationDate).toLocaleDateString('ru-RU')}`,
-            // Новые поля только для чтения
             'profileNameDisplay': `${this.currentUser.firstName} ${this.currentUser.lastName}`,
             'profileRoleDisplay': this.currentUser.role === 'admin' ? 'Администратор' : 'Клиент',
             'profileJoinDateDisplay': new Date(this.currentUser.registrationDate).toLocaleDateString('ru-RU')
@@ -466,7 +435,6 @@ class AuthManager {
             const element = document.getElementById(id);
             console.log(`Element ${id} found:`, !!element);
             if (element) {
-                // Для input элементов используем value, для остальных - textContent
                 if (element.tagName === 'INPUT') {
                     element.value = profileElements[id];
                 } else {
@@ -476,25 +444,15 @@ class AuthManager {
             }
         });
 
-        // Заполняем поля формы
         if (document.getElementById('profileBirthday') && this.currentUser.birthday) {
             document.getElementById('profileBirthday').value = this.currentUser.birthday;
             console.log('Birthday field updated to:', this.currentUser.birthday);
         }
 
-        // Загружаем предпочтения пользователя
         this.loadUserPreferences();
-
-        // Обновляем бронирования
         this.updateBookings();
-
-        // Показываем соответствующий интерфейс для администратора/клиента
         this.updateProfileInterface();
-
-        // Инициализируем вкладки
         this.setupProfileTabs();
-
-        // Переустанавливаем обработчики событий для профиля
         this.setupProfileEventListeners();
 
         console.log('=== Profile page update complete ===');
@@ -510,20 +468,17 @@ class AuthManager {
                 const tabId = this.getAttribute('data-tab');
                 console.log('Tab clicked:', tabId);
                 
-                // Убираем активный класс у всех кнопок и контента
                 tabButtons.forEach(btn => btn.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.remove('active');
                 });
                 
-                // Добавляем активный класс текущей кнопке и контенту
                 this.classList.add('active');
                 const activeContent = document.getElementById(tabId);
                 if (activeContent) {
                     activeContent.classList.add('active');
                 }
                 
-                // Если это вкладка администратора, добавляем кнопку VK
                 if (tabId === 'management' && window.authManager.currentUser?.role === 'admin') {
                     setTimeout(() => {
                         window.authManager.addVkPublishButton();
@@ -536,28 +491,24 @@ class AuthManager {
     setupProfileEventListeners() {
         console.log('Setting up profile event listeners');
         
-        // Обработка сохранения профиля
         const saveProfileBtn = document.querySelector('#main .btn-primary');
         if (saveProfileBtn) {
             saveProfileBtn.onclick = (e) => this.handleSaveProfile(e);
             console.log('Profile save button listener set');
         }
 
-        // Обработка смены пароля
         const changePasswordBtn = document.querySelector('#settings .btn-primary');
         if (changePasswordBtn) {
             changePasswordBtn.onclick = (e) => this.handleChangePassword(e);
             console.log('Password change button listener set');
         }
 
-        // Обработка сохранения предпочтений
         const savePreferencesBtn = document.querySelector('#settings .btn-primary:nth-child(2)');
         if (savePreferencesBtn) {
             savePreferencesBtn.onclick = (e) => this.handleSavePreferences(e);
             console.log('Preferences save button listener set');
         }
 
-        // Добавляем кнопку выхода на страницу профиля
         const logoutBtn = document.getElementById('logoutBtn');
         if (!logoutBtn) {
             this.addLogoutButton();
@@ -569,7 +520,6 @@ class AuthManager {
     addLogoutButton() {
         console.log('Adding logout button to profile page');
         
-        // Создаем кнопку выхода если ее нет
         const logoutBtn = document.createElement('button');
         logoutBtn.id = 'logoutBtn';
         logoutBtn.className = 'btn-primary';
@@ -577,7 +527,6 @@ class AuthManager {
         logoutBtn.textContent = 'Выйти из аккаунта';
         logoutBtn.onclick = () => this.logout();
         
-        // Добавляем кнопку в конец секции профиля
         const profileSection = document.querySelector('.profile-section');
         if (profileSection) {
             profileSection.appendChild(logoutBtn);
@@ -600,14 +549,12 @@ class AuthManager {
             birthday: document.getElementById('profileBirthday').value || this.currentUser.birthday
         };
 
-        // Обновляем пользователя в базе
         const userIndex = this.users.findIndex(u => u.id === this.currentUser.id);
         if (userIndex !== -1) {
             this.users[userIndex] = updatedUser;
             localStorage.setItem('atrium_users', JSON.stringify(this.users));
         }
 
-        // Обновляем текущего пользователя
         this.currentUser = updatedUser;
         localStorage.setItem('current_user', JSON.stringify(updatedUser));
 
@@ -642,7 +589,6 @@ class AuthManager {
             return;
         }
 
-        // Обновляем пароль
         this.currentUser.password = newPassword;
         const userIndex = this.users.findIndex(u => u.id === this.currentUser.id);
         if (userIndex !== -1) {
@@ -653,7 +599,6 @@ class AuthManager {
 
         this.showNotification('Пароль успешно изменен!');
         
-        // Очищаем поля
         document.getElementById('currentPassword').value = '';
         document.getElementById('newPassword').value = '';
         document.getElementById('confirmPassword').value = '';
@@ -710,12 +655,10 @@ class AuthManager {
         const userBookings = this.bookings.filter(booking => booking.userId === this.currentUser.id);
         console.log('User bookings found:', userBookings.length);
         
-        // Обновляем текущие бронирования
         const currentBookingsContainer = document.getElementById('currentBookings');
         console.log('Current bookings container found:', !!currentBookingsContainer);
         
         if (currentBookingsContainer) {
-            // Очищаем контейнер
             currentBookingsContainer.innerHTML = '';
             
             const currentBookings = userBookings.filter(b => b.status !== 'cancelled');
@@ -733,12 +676,10 @@ class AuthManager {
             }
         }
 
-        // Обновляем историю бронирований
         const historyContainer = document.getElementById('bookingHistory');
         console.log('History container found:', !!historyContainer);
         
         if (historyContainer) {
-            // Очищаем контейнер
             historyContainer.innerHTML = '';
             
             const historyBookings = userBookings.filter(b => b.status === 'cancelled');
@@ -877,7 +818,6 @@ class AuthManager {
 
     updateAdminInterface() {
         console.log('Updating admin interface');
-        // Обновляем статистику для администратора
         const totalRooms = 24;
         const occupiedRooms = this.bookings.filter(b => b.type === 'room' && b.status === 'paid').length;
         const freeRooms = totalRooms - occupiedRooms;
@@ -894,24 +834,19 @@ class AuthManager {
             console.log('Admin stats updated');
         }
 
-        // Обновляем таблицу бронирований
         this.updateAdminBookingsTable();
-
-        // ДОБАВЛЯЕМ КНОПКУ ДЛЯ ПУБЛИКАЦИИ В VK
         this.addVkPublishButton();
     }
 
     addVkPublishButton() {
         console.log('Adding VK publish button for admin');
         
-        // Проверяем, не добавлена ли уже кнопка
         const existingButton = document.getElementById('vkPublishBtn');
         if (existingButton) {
             console.log('VK button already exists');
             return;
         }
 
-        // Создаем кнопку публикации в VK
         const vkButton = document.createElement('button');
         vkButton.id = 'vkPublishBtn';
         vkButton.className = 'btn-primary';
@@ -924,10 +859,8 @@ class AuthManager {
             window.location.href = 'vk.html';
         };
 
-        // Добавляем кнопку в секцию управления
         const managementSection = document.querySelector('#management');
         if (managementSection) {
-            // Вставляем кнопку перед таблицей
             const table = managementSection.querySelector('.table');
             if (table) {
                 managementSection.insertBefore(vkButton, table);
@@ -981,23 +914,28 @@ class AuthManager {
         return statusMap[status] || status;
     }
 
-    // Методы для работы с бронированиями
-    handleRoomBooking(roomData) {
-        if (!this.currentUser) {
-            this.pendingBooking = roomData;
-            this.showNotification('Для бронирования необходимо войти в аккаунт', true);
-            // Перенаправляем на страницу авторизации
-            window.location.href = 'authorization.html';
-            return false;
-        }
+    // НОВЫЙ МЕТОД: Перенаправление на страницу бронирования
+    redirectToBookingPage(bookingData) {
+        console.log('Redirecting to booking page with data:', bookingData);
         
-        return this.createBooking(roomData);
+        // Сохраняем данные бронирования в localStorage для использования на странице booking.html
+        localStorage.setItem('pending_booking', JSON.stringify(bookingData));
+        
+        // Перенаправляем на страницу бронирования
+        window.location.href = 'booking.html';
     }
 
-    createBooking(bookingData) {
+    // ИЗМЕНЕНО: Теперь вместо создания бронирования перенаправляем на booking.html
+    handleRoomBooking(roomData) {
+        this.redirectToBookingPage(roomData);
+        return true;
+    }
+
+    // Метод для создания бронирования (используется на странице booking.html)
+    createBooking(bookingData, userInfo = null) {
         const booking = {
             id: 'BKG-' + Date.now(),
-            userId: this.currentUser.id,
+            userId: userInfo ? userInfo.id : (this.currentUser ? this.currentUser.id : null),
             type: 'room',
             title: bookingData.roomName,
             checkin: bookingData.checkin,
@@ -1005,18 +943,25 @@ class AuthManager {
             guests: bookingData.guests,
             price: this.calculatePrice(bookingData.roomName, bookingData.checkin, bookingData.checkout),
             status: 'pending',
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            userInfo: userInfo || (this.currentUser ? {
+                firstName: this.currentUser.firstName,
+                lastName: this.currentUser.lastName,
+                email: this.currentUser.email,
+                phone: this.currentUser.phone
+            } : null)
         };
         
         this.bookings.push(booking);
         localStorage.setItem('atrium_bookings', JSON.stringify(this.bookings));
         
-        this.showNotification('Номер успешно забронирован!');
-        return true;
+        // Удаляем отложенное бронирование из localStorage
+        localStorage.removeItem('pending_booking');
+        
+        return booking;
     }
 
     calculatePrice(roomName, checkin, checkout) {
-        // Базовая цена в зависимости от типа номера
         const basePrices = {
             'Стандарт': 5000,
             'Комфорт': 8000,
@@ -1027,7 +972,6 @@ class AuthManager {
         
         const basePrice = basePrices[roomName] || 5000;
         
-        // Расчет количества ночей
         const checkinDate = new Date(checkin.split('.').reverse().join('-'));
         const checkoutDate = new Date(checkout.split('.').reverse().join('-'));
         const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
@@ -1080,7 +1024,6 @@ class AuthManager {
     }
 
     showNotification(message, isError = false) {
-        // Удаляем существующие уведомления
         const existingNotifications = document.querySelectorAll('.notification');
         existingNotifications.forEach(notification => {
             if (notification.parentNode) {
@@ -1094,10 +1037,8 @@ class AuthManager {
         
         document.body.appendChild(notification);
         
-        // Анимация появления
         setTimeout(() => notification.classList.add('show'), 100);
         
-        // Автоматическое скрытие через 3 секунды
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => {
@@ -1108,7 +1049,6 @@ class AuthManager {
         }, 3000);
     }
 
-    // Дополнительные методы для управления пользователями
     getUserById(id) {
         return this.users.find(user => user.id === id);
     }
@@ -1165,6 +1105,7 @@ window.openRoomModal = function(roomType) {
     }
 };
 
+// ИЗМЕНЕНО: Теперь при нажатии "Забронировать" перенаправляем на booking.html
 window.bookRoom = function(roomName) {
     if (!roomName) {
         console.error('Room name is required');
@@ -1183,7 +1124,6 @@ window.bookRoom = function(roomName) {
         window.authManager.handleRoomBooking(bookingData);
     }
     
-    // Закрываем все модальные окна
     document.querySelectorAll('.premium-modal, .room-modal, .service-modal, .swiss-modal').forEach(modal => {
         modal.classList.remove('active');
     });

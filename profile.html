@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль - Отель Атриум</title>
     <link rel="stylesheet" href="stail.css">
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
     <style>
         /* Основные стили профиля */
         .profile-section {
@@ -688,6 +689,7 @@
                 <a href="rooms.html" class="nav-link">Номера</a>
                 <a href="conference.html" class="nav-link">Конференц-залы</a>
                 <a href="spa.html" class="nav-link">SPA-услуги</a>
+                <a href="news.html" class="nav-link">Новости</a>
                 <a href="contacts.html" class="nav-link">Контакты</a>
                 <a href="#" class="nav-link" id="loginBtn">Войти</a>
             </nav>
@@ -1136,65 +1138,24 @@
     </footer>
 
     <!-- Мобильное меню -->
-    <div class="mobile-menu-overlay"></div>
-    <div class="mobile-menu">
-        <div class="mobile-logo">
-            <img src="png/logo.png" alt="Atrium Logo">
-        </div>
-        <nav class="mobile-nav">
-            <a href="index.html" class="mobile-nav-link">Главная</a>
-            <a href="rooms.html" class="mobile-nav-link">Номера</a>
-            <a href="conference.html" class="mobile-nav-link">Конференц-залы</a>
-            <a href="spa.html" class="mobile-nav-link">SPA-услуги</a>
-            <a href="contacts.html" class="mobile-nav-link">Контакты</a>
-            <a href="#" class="mobile-nav-link" id="mobileLoginBtn">Войти</a>
-        </nav>
+   <div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <img src="png/logo.png" alt="Atrium Logo" class="mobile-logo-img">
+        <button class="mobile-close" aria-label="Закрыть меню">✕</button>
     </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">🏠 Главная</a>
+        <a href="rooms.html" class="mobile-nav-link active">🛏️ Номера</a>
+        <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>
+        <a href="news.html" class="mobile-nav-link">📰 Новости</a>
+        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
+    </nav>
+</div>
 
-    <!-- Модальное окно авторизации -->
-    <div id="authModal" class="auth-modal">
-        <div class="auth-modal-content">
-            <button id="closeAuth" class="close-auth">&times;</button>
-            <div class="auth-header">
-                <h2 class="auth-title">Вход в аккаунт</h2>
-                <p class="auth-subtitle">Войдите в свой профиль отеля "Атриум"</p>
-            </div>
-            
-            <form id="loginFormModal" class="auth-form">
-                <div class="input-group">
-                    <input type="email" name="email" placeholder="Email" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="Пароль" required>
-                </div>
-                <button type="submit" class="btn-primary">Войти</button>
-            </form>
-            
-            <form id="registerForm" class="auth-form hidden">
-                <div class="input-group">
-                    <input type="text" name="firstName" placeholder="Имя" required>
-                </div>
-                <div class="input-group">
-                    <input type="text" name="lastName" placeholder="Фамилия" required>
-                </div>
-                <div class="input-group">
-                    <input type="tel" name="phone" placeholder="Телефон" required>
-                </div>
-                <div class="input-group">
-                    <input type="email" name="email" placeholder="Email" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="Пароль" required>
-                </div>
-                <button type="submit" class="btn-primary">Зарегистрироваться</button>
-            </form>
-            
-            <div class="auth-footer">
-                <p>Нет аккаунта? <a href="#" class="register-link">Зарегистрироваться</a></p>
-                <p class="hidden">Уже есть аккаунт? <a href="#" class="login-link">Войти</a></p>
-            </div>
-        </div>
-    </div>
+   
 
     <!-- Подключаем скрипты -->
     <script src="auth.js"></script>
