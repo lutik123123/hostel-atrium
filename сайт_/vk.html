@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Публикация в ВКонтакте - Отель Атриум</title>
+  <link rel="stylesheet" href="stail.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
+  <style>
+    :root {
+        --gold: #F1B544;
+        --gold-light: #F2C96A;
+        --white: #ffffff;
+        --black: #000000;
+        --gray: #666666;
+        --light-gray: #f5f5f5;
+        --border: #e0e0e0;
+        --shadow-light: rgba(241, 181, 68, 0.15);
+    }
+    
+    body {
+        font-family: 'Arial', sans-serif;
+        color: var(--black);
+        background-color: var(--white);
+        line-height: 1.6;
+    }
+    
+    .page-offset {
+        height: 80px;
+    }
+    
+    .vk-publish-section {
+        padding: 100px 20px 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+        background-color: var(--white);
+    }
+    
+    .vk-publish-header {
+        text-align: center;
+        margin-bottom: 50px;
+        padding-bottom: 25px;
+        border-bottom: 2px solid var(--border);
+    }
+    
+    .vk-publish-header h2 {
+        font-size: 2.5rem;
+        color: var(--black);
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+    
+    .vk-publish-header p {
+        font-size: 1.2rem;
+        color: var(--gray);
+        font-weight: 500;
+    }
+    
+    .vk-panel-container {
+        display: grid;
+        grid-template-columns: 1.3fr 1.7fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+    
+    @media (max-width: 1200px) {
+        .vk-panel-container {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .vk-panel-container {
+            grid-template-columns: 1fr;
+        }
+        .vk-publish-section {
+            padding: 90px 15px 40px;
+        }
+        .vk-publish-header h2 {
+            font-size: 2rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .vk-publish-section {
+            padding: 80px 10px 30px;
+        }
+        .vk-publish-header h2 {
+            font-size: 1.8rem;
+        }
+    }
+    
+    .vk-panel {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+        height: fit-content;
+    }
+    
+    .vk-panel:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        border-color: var(--gold);
+    }
+    
+    .vk-panel h3 {
+        font-size: 1.5rem;
+        color: var(--black);
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--gold);
+        font-weight: 600;
+    }
+    
+    /* История - правая панель */
+    .history-panel {
+        background: var(--white);
+    }
+    
+    .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .history-header h3 {
+        margin-bottom: 0;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    
+    .history-search {
+        width: 250px;
+    }
+    
+    @media (max-width: 768px) {
+        .history-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .history-search {
+            width: 100%;
+        }
+    }
+    
+    .local-history {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+    
+    .local-history::-webkit-scrollbar {
+        width: 5px;
+    }
+    
+    .local-history::-webkit-scrollbar-track {
+        background: var(--light-gray);
+        border-radius: 10px;
+    }
+    
+    .local-history::-webkit-scrollbar-thumb {
+        background: var(--gold);
+        border-radius: 10px;
+    }
+    
+    .history-item {
+        background: var(--light-gray);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--gold);
+    }
+    
+    .history-item:hover {
+        background: rgba(241, 181, 68, 0.05);
+        transform: translateX(3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .history-text {
+        margin-bottom: 15px;
+        line-height: 1.6;
+        color: var(--black);
+        font-size: 15px;
+        font-weight: 500;
+    }
+    
+    .history-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        color: var(--gray);
+        font-weight: 500;
+    }
+    
+    .history-status {
+        color: #2E7D32;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .history-error {
+        color: #C62828;
+    }
+    
+    /* Кнопки */
+    .button-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+    }
+    
+    .btn-primary, .btn-secondary {
+        flex: 1;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        font-family: 'Arial', sans-serif;
+        text-decoration: none !important;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        color: var(--black);
+        box-shadow: 0 4px 15px rgba(241, 181, 68, 0.2);
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #e6a736 0%, #e8b95a 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(241, 181, 68, 0.3);
+    }
+    
+    .btn-secondary {
+        background: transparent;
+        color: var(--black);
+        border: 2px solid var(--border);
+    }
+    
+    .btn-secondary:hover {
+        background: rgba(241, 181, 68, 0.1);
+        border-color: var(--gold);
+        transform: translateY(-2px);
+    }
+    
+    /* Платформа */
+    .platform-info {
+        background: rgba(241, 181, 68, 0.05);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid var(--gold);
+    }
+    
+    .platform-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .platform-icon {
+        font-size: 2rem;
+        color: var(--gold);
+    }
+    
+    .platform-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--black);
+    }
+    
+    .platform-status {
+        color: #2E7D32;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .api-status {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    
+    .api-status.connected {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2E7D32;
+        border: 1px solid #4CAF50;
+    }
+    
+    .api-status.error {
+        background: rgba(198, 40, 40, 0.1);
+        color: #C62828;
+        border: 1px solid #F44336;
+    }
+    
+    .test-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .test-btn {
+        flex: 1;
+        padding: 12px 15px;
+        background: var(--light-gray);
+        border: 1px solid var(--border);
+        color: var(--black);
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .test-btn:hover {
+        background: rgba(241, 181, 68, 0.1);
+        border-color: var(--gold);
+        transform: translateY(-2px);
+    }
+    
+    /* Фото */
+    .photo-attachment {
+        background: rgba(241, 181, 68, 0.05);
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 15px;
+        border: 1px solid var(--gold);
+    }
+    
+    .photo-attachment p {
+        font-weight: 600;
+        color: var(--black);
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .photo-inputs {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .photo-preview {
+        margin-top: 15px;
+        text-align: center;
+    }
+    
+    .preview-image {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 10px;
+        display: none;
+        border: 2px solid var(--gold);
+        margin: 0 auto;
+        box-shadow: 0 4px 15px rgba(241, 181, 68, 0.2);
+    }
+    
+    .extracted-info {
+        background: rgba(46, 125, 50, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+        border: 1px solid #4CAF50;
+        font-size: 14px;
+        color: #2E7D32;
+        font-weight: 600;
+        display: none;
+    }
+    
+    /* Переключатели */
+    .schedule-toggle {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 15px 0;
+        padding: 12px;
+        background: var(--light-gray);
+        border-radius: 10px;
+    }
+    
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 32px;
+    }
+    
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--border);
+        border: 2px solid var(--border);
+        transition: .4s;
+        border-radius: 32px;
+    }
+    
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 24px;
+        width: 24px;
+        left: 2px;
+        bottom: 2px;
+        background: var(--white);
+        transition: .4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    input:checked + .toggle-slider {
+        background-color: var(--gold);
+    }
+    
+    input:checked + .toggle-slider:before {
+        transform: translateX(28px);
+        background: var(--white);
+    }
+    
+    .schedule-toggle span {
+        font-weight: 600;
+        color: var(--black);
+        font-size: 15px;
+    }
+    
+    .datetime-input {
+        display: none;
+        animation: fadeIn 0.3s ease;
+        margin-top: 15px;
+        padding-left: 15px;
+    }
+    
+    .datetime-input.active {
+        display: block;
+    }
+    
+    /* Сообщения */
+    .status-message {
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px 0;
+        text-align: center;
+        font-weight: 600;
+        display: none;
+        animation: fadeIn 0.3s ease;
+        font-size: 14px;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .success {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2E7D32;
+        border: 1px solid #4CAF50;
+    }
+    
+    .error {
+        background: rgba(198, 40, 40, 0.1);
+        color: #C62828;
+        border: 1px solid #F44336;
+    }
+    
+    /* Загрузка */
+    .button-loading {
+        position: relative;
+        color: transparent !important;
+    }
+    
+    .button-loading::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid transparent;
+        border-top: 2px solid var(--black);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .post-time {
+        font-size: 13px;
+        color: var(--gray);
+        font-weight: 500;
+        margin-top: 5px;
+    }
+    
+    .history-text-content {
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 10px;
+        color: var(--black);
+        font-weight: 500;
+    }
+    
+    .notification {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: var(--gold);
+        color: var(--black);
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 1000;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        font-weight: 600;
+        max-width: 350px;
+    }
+    
+    .notification.show {
+        transform: translateX(0);
+    }
+    
+    /* Новые стили для интерфейса "Что у вас нового?" */
+    .vk-composer {
+        background: #fff;
+        border-radius: 12px;
+    }
+    
+    .composer-input-wrapper textarea {
+        font-family: inherit;
+        line-height: 1.5;
+        width: 100%;
+        border: none;
+        resize: vertical;
+        min-height: 100px;
+        padding: 12px 0;
+        font-size: 15px;
+        background: transparent;
+        outline: none;
+    }
+    
+    .composer-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid var(--border);
+        padding-top: 15px;
+        margin-top: 5px;
+    }
+    
+    .toolbar-left {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    
+    .toolbar-btn {
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 18px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .toolbar-btn:hover {
+        background: #f0f0f0;
+    }
+    
+    /* Универсальные выпадающие меню (как "Ещё") */
+    .dropdown-select {
+        position: relative;
+    }
+    
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .dropdown-toggle:hover {
+        background-color: #f0f0f0;
+    }
+    
+    .dropdown-menu-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        padding: 8px 0;
+        min-width: 200px;
+        z-index: 100;
+        border: 1px solid var(--border);
+        margin-top: 5px;
+        display: none;
+    }
+    
+    .dropdown-menu-item {
+        display: block;
+        width: 100%;
+        padding: 10px 16px;
+        text-align: left;
+        background: none;
+        border: none;
+        font-size: 14px;
+        color: #000;
+        cursor: pointer;
+        transition: background 0.15s;
+        font-weight: 500;
+    }
+    
+    .dropdown-menu-item:hover {
+        background: #f5f5f5;
+    }
+    
+    /* Для чекбоксов внутри пунктов меню */
+    .dropdown-menu-item label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        width: 100%;
+        margin: 0;
+        font-weight: 500;
+    }
+    
+    .dropdown-menu-item input[type="checkbox"] {
+        margin: 0;
+    }
+    
+    .publish-btn {
+        background: var(--gold);
+        border: none;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-weight: 700;
+        font-size: 15px;
+        color: #000;
+        cursor: pointer;
+        transition: 0.2s;
+        border: 1px solid transparent;
+    }
+    
+    .publish-btn:hover {
+        background: #e6a736;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(241, 181, 68, 0.3);
+    }
+    
+    .publish-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    @media (max-width: 768px) {
+        .vk-panel {
+            padding: 20px;
+        }
+        .vk-panel h3 {
+            font-size: 1.3rem;
+        }
+        .button-group {
+            flex-direction: column;
+        }
+        .photo-inputs {
+            flex-direction: column;
+        }
+        .test-buttons {
+            flex-direction: column;
+        }
+        .composer-toolbar {
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+        }
+        .toolbar-left {
+            justify-content: space-between;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .vk-panel {
+            padding: 15px;
+        }
+        .vk-panel h3 {
+            font-size: 1.2rem;
+        }
+        .form-control, textarea, select {
+            padding: 10px 14px;
+        }
+        .btn-primary, .btn-secondary {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="nav">
+        <a href="index.html" class="logo">
+            <img src="png/logo.png" alt="Atrium Logo">
+        </a>
+        
+        <nav>
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="rooms.html" class="nav-link">Номера</a>
+            <a href="conference.html" class="nav-link">Конференц-залы</a>
+            <a href="spa.html" class="nav-link">SPA-услуги</a>
+            <a href="news.html" class="nav-link">Новости</a>
+            <a href="contacts.html" class="nav-link">Контакты</a>
+            <a href="authorization.html" class="nav-link" id="loginBtn">Войти</a>
+        </nav>
+        
+        <button class="menu-toggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<div class="page-offset"></div>
+
+<!-- Нотификация -->
+<div class="notification" id="notification">
+    <div id="notificationContent"></div>
+</div>
+
+<!-- ===== VK PUBLISH SECTION ===== -->
+<section class="vk-publish-section">
+    <div class="vk-publish-header">
+        <h2><i class="fab fa-vk"></i> Публикация в ВКонтакте</h2>
+        <p>Управление публикациями в группе отеля Атриум</p>
+    </div>
+    
+    <div class="vk-panel-container">
+        <!-- ЛЕВАЯ ПАНЕЛЬ: ИНТЕРФЕЙС В СТИЛЕ "ЧТО У ВАС НОВОГО?" -->
+        <div class="vk-panel">
+            <h3 style="display: flex; align-items: center; gap: 10px;">
+                <i class="fab fa-vk"></i> Новая запись
+            </h3>
+
+            <div class="platform-info" style="padding: 12px 16px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="png/logo.png" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <div>
+                            <div style="font-weight: 700;">Гостиница «Атриум»</div>
+                            <div style="font-size: 13px; color: #2E7D32;">✓ Подключено</div>
+                        </div>
+                    </div>
+                    <div id="apiStatus" class="api-status" style="margin:0; padding:6px 12px; font-size:12px;">
+                        <i class="fas fa-sync fa-spin"></i> Проверка...
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-form" id="postForm">
+                <div class="vk-composer">
+                    <div class="composer-input-wrapper">
+                        <textarea id="postText" 
+                                  placeholder="Что у вас нового?" 
+                                  maxlength="4000"></textarea>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+                        <span id="charCount" style="font-size:13px; color:#666;">0/4000</span>
+                    </div>
+
+                    <div id="photoAttachmentBlock" style="display: none; margin: 10px 0;">
+                        <div style="display: flex; align-items: center; gap: 10px; background: #f5f5f5; border-radius: 10px; padding: 10px;">
+                            <img id="previewImage" class="preview-image" style="max-width:80px; max-height:80px; border-radius:8px; display:block;">
+                            <div style="flex:1;">
+                                <div style="font-weight:600; font-size:14px;">Фото прикреплено</div>
+                                <div id="photoIdsDisplay" style="font-size:12px; color:#666;"></div>
+                            </div>
+                            <button type="button" onclick="removePhoto()" style="background:none; border:none; color:#C62828; cursor:pointer;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="composer-toolbar">
+                        <div class="toolbar-left">
+                            <button type="button" class="toolbar-btn" id="showPhotoInputBtn" title="Прикрепить фото">
+                                <i class="far fa-image"></i>
+                            </button>
+                            
+                            <!-- Выпадающее меню "Сейчас" -->
+                            <div class="dropdown-select">
+                                <button type="button" class="toolbar-btn dropdown-toggle" data-dropdown="publishMode">
+                                    <span id="publishModeText">Сейчас</span> ▼
+                                </button>
+                                <div class="dropdown-menu-content" data-dropdown-menu="publishMode">
+                                    <button type="button" class="dropdown-menu-item" data-value="now">Сейчас</button>
+                                    <button type="button" class="dropdown-menu-item" data-value="schedule">Отложить</button>
+                                </div>
+                            </div>
+
+                            <!-- Выпадающее меню "Тематика" -->
+                            <div class="dropdown-select">
+                                <button type="button" class="toolbar-btn dropdown-toggle" data-dropdown="topic">
+                                    <span id="topicText">Тематика</span> ▼
+                                </button>
+                                <div class="dropdown-menu-content" data-dropdown-menu="topic">
+                                    <button type="button" class="dropdown-menu-item" data-value="news">Новость</button>
+                                    <button type="button" class="dropdown-menu-item" data-value="promo">Акция</button>
+                                    <button type="button" class="dropdown-menu-item" data-value="event">Событие</button>
+                                    <button type="button" class="dropdown-menu-item" data-value="blog">Блог</button>
+                                </div>
+                            </div>
+
+                            <!-- Выпадающее меню "Статья" -->
+                            <div class="dropdown-select">
+                                <button type="button" class="toolbar-btn dropdown-toggle" data-dropdown="format">
+                                    <span id="formatText">Статья</span> ▼
+                                </button>
+                                <div class="dropdown-menu-content" data-dropdown-menu="format">
+                                    <button type="button" class="dropdown-menu-item" data-value="article">Статья</button>
+                                    <button type="button" class="dropdown-menu-item" data-value="note">Заметка</button>
+                                    <button type="button" class="dropdown-menu-item" data-value="ad">Реклама</button>
+                                    <button type="button" class="dropdown-menu-item" data-value="poll">Опрос</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Кнопка "Ещё" -->
+                            <div class="dropdown-select">
+                                <button type="button" class="toolbar-btn dropdown-toggle" data-dropdown="more">
+                                    Ещё ▼
+                                </button>
+                                <div class="dropdown-menu-content" data-dropdown-menu="more">
+                                    <label class="dropdown-menu-item">
+                                        <input type="checkbox" id="fromGroup" checked> От имени сообщества
+                                    </label>
+                                    <label class="dropdown-menu-item">
+                                        <input type="checkbox" id="signed" checked> Подпись автора
+                                    </label>
+                                    <hr style="margin:5px 0;">
+                                    <button type="button" class="dropdown-menu-item" onclick="testConnection()">
+                                        <i class="fas fa-wifi"></i> Проверить подключение
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="publish-btn" id="publishBtn">
+                            Опубликовать
+                        </button>
+                    </div>
+                </div>
+
+                <div id="photoUrlInputContainer" style="display: none; margin-top: 15px;">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="url" id="photoUrl" placeholder="Вставьте ссылку на фото ВКонтакте" class="form-control" style="flex:1;">
+                        <button type="button" class="btn-secondary" id="parseUrlBtn" style="padding:0 20px;">Извлечь</button>
+                    </div>
+                    <div id="extractedInfo" class="extracted-info" style="display: none; margin-top: 10px;"></div>
+                </div>
+
+                <div id="scheduleSettings" style="display: none; margin-top: 15px;">
+                    <input type="datetime-local" id="scheduleDateTime" class="form-control">
+                    <small style="color: #666; display: block; margin-top: 5px;">Минимум через 5 минут</small>
+                </div>
+
+                <div class="status-message success" id="successMessage"></div>
+                <div class="status-message error" id="errorMessage"></div>
+            </div>
+        </div>
+        
+        <!-- ПРАВАЯ ПАНЕЛЬ: ИСТОРИЯ -->
+        <div class="vk-panel history-panel">
+            <div class="history-header">
+                <h3>История публикаций</h3>
+                <div class="history-search">
+                    <input type="text" id="searchHistory" placeholder="Поиск по истории..." class="form-control">
+                </div>
+            </div>
+            <div class="local-history">
+                <div id="historyList">
+                    <div class="history-item">
+                        <div class="history-text-content">Здесь будет отображаться история ваших постов. После первой публикации здесь появится информация о ваших постах.</div>
+                        <div class="history-meta">
+                            <span>--.--.---- --:--</span>
+                            <span class="history-status">Готов к работе</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>О гостинице «Атриум»</h3>
+            <p>Современная гостиница в центре города, предлагающая комфортабельные номера и высокий уровень сервиса для вашего идеального отдыха.</p>
+            <div class="social-links">
+                <a href="https://vk.com/club233613781" target="_blank">VK</a>
+                <a href="#">Rutube</a>
+                <a href="#">Max</a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Наши услуги</h3>
+            <ul>
+                <li><a href="rooms.html">Бронирование номеров</a></li>
+                <li><a href="conference.html">Конференц-залы</a></li>
+                <li><a href="spa.html">SPA-услуги</a></li>
+                <li><a href="#">Трансфер от/до аэропорта</a></li>
+                <li><a href="#">Ресторан</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Быстрые ссылки</h3>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="rooms.html">Номера</a></li>
+                <li><a href="conference.html">Конференц-залы</a></li>
+                <li><a href="spa.html">SPA-услуги</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section footer-contact">
+            <h3>Контакты</h3>
+            <p>📍 г. Москва, ул. Примерная, 45</p>
+            <p>📞 +7 (495) 555-33-22</p>
+            <p>✉️ info@atriumhotel.ru</p>
+            <p>🕒 Круглосуточно</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>© 2025 Гостиница «Атриум». Все права защищены.</p>
+    </div>
+</footer>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <img src="png/logo.png" alt="Atrium Logo" class="mobile-logo-img">
+        <button class="mobile-close" aria-label="Закрыть меню">✕</button>
+    </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">🏠 Главная</a>
+        <a href="rooms.html" class="mobile-nav-link active">🛏️ Номера</a>
+        <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>
+        <a href="news.html" class="mobile-nav-link">📰 Новости</a>
+        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
+    </nav>
+</div>
+
+<script>
+    // Конфигурация VK API
+    const VK_TOKEN = 'vk1.a.WLxK1kw1HqwCv--4NAIgu2zVQOBv04kGw7jhE7FR9GY3qgeFdJV_jOK5mFYhYxVhfsZW6ReF6ceyz8d-U9fK0aVRJIYyxHbRWCMlqBrb0tHk5g296K7kkTF7LnlEgWnnQnoW1VIjWnDQh98GyXR12EJLqFAe6qwyE48bdEiWft6YCXuGMQQd9YfWPZ7KIL5K8Mt4b087dfI8gn-1vUca_A';
+    const GROUP_ID = '-233613781';
+    let localHistory = JSON.parse(localStorage.getItem('vk_publish_history') || '[]');
+    let extractedPhotoIds = [];
+
+    // Инициализация при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        checkTokenValidity();
+        loadLocalHistory();
+        setupCharCounter();
+        setupUrlParser();
+        setupUIEventListeners();
+        
+        const savedDraft = localStorage.getItem('vk_draft');
+        if (savedDraft) {
+            document.getElementById('postText').value = savedDraft;
+            document.getElementById('charCount').textContent = savedDraft.length;
+        }
+    });
+
+    function setupCharCounter() {
+        const postText = document.getElementById('postText');
+        const charCount = document.getElementById('charCount');
+        postText.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+            charCount.style.color = this.value.length > 3500 ? '#C62828' : '#666';
+        });
+    }
+
+    function setupUrlParser() {
+        const parseBtn = document.getElementById('parseUrlBtn');
+        const photoUrl = document.getElementById('photoUrl');
+        
+        parseBtn.addEventListener('click', function() {
+            const url = photoUrl.value.trim();
+            if (!url) {
+                showMessage('Введите ссылку на фото', 'error');
+                return;
+            }
+            const photoIds = extractPhotoIdsFromUrl(url);
+            if (photoIds.length > 0) {
+                extractedPhotoIds = photoIds;
+                displayExtractedIds(photoIds);
+                showNotification(`Успешно извлечено ${photoIds.length} ID фото`);
+                loadPhotoPreview(photoIds[0]);
+            } else {
+                showMessage('Не удалось извлечь ID фото из ссылки', 'error');
+            }
+        });
+        
+        photoUrl.addEventListener('paste', function(e) {
+            setTimeout(() => {
+                const url = photoUrl.value.trim();
+                const photoIds = extractPhotoIdsFromUrl(url);
+                if (photoIds.length > 0) {
+                    extractedPhotoIds = photoIds;
+                    displayExtractedIds(photoIds);
+                    loadPhotoPreview(photoIds[0]);
+                }
+            }, 100);
+        });
+    }
+
+    function extractPhotoIdsFromUrl(url) {
+        const patterns = [
+            /photo(-?\d+)_(\d+)/,
+            /vk\.com\/photo(-?\d+)_(\d+)/,
+            /z=photo(-?\d+)_(\d+)/,
+            /albums(-?\d+)\/(\d+)/,
+            /photos(-?\d+)\/(\d+)/
+        ];
+        const photoIds = [];
+        for (const pattern of patterns) {
+            const match = url.match(pattern);
+            if (match) {
+                photoIds.push(`${match[1]}_${match[2]}`);
+            }
+        }
+        return photoIds;
+    }
+
+    function displayExtractedIds(photoIds) {
+        const extractedInfo = document.getElementById('extractedInfo');
+        extractedInfo.innerHTML = `<i class="fas fa-check-circle"></i> ID извлечены: ${photoIds.map(id => `photo${id}`).join(', ')}`;
+        extractedInfo.style.display = 'block';
+        
+        document.getElementById('photoAttachmentBlock').style.display = 'block';
+        document.getElementById('photoIdsDisplay').textContent = photoIds.map(id => `photo${id}`).join(', ');
+    }
+
+    function loadPhotoPreview(photoId) {
+        const previewImage = document.getElementById('previewImage');
+        const previewUrls = [
+            `https://sun9-71.userapi.com/impg/${photoId.replace('_', '/')}.jpg`,
+            `https://sun1-87.userapi.com/impg/${photoId.replace('_', '/')}.jpg`,
+            `https://sun9-74.userapi.com/impg/${photoId.replace('_', '/')}.jpg`
+        ];
+        let currentUrlIndex = 0;
+        
+        function tryNextUrl() {
+            if (currentUrlIndex >= previewUrls.length) {
+                previewImage.style.display = 'none';
+                return;
+            }
+            previewImage.src = previewUrls[currentUrlIndex];
+            previewImage.style.display = 'block';
+            previewImage.onload = function() {};
+            previewImage.onerror = function() {
+                currentUrlIndex++;
+                tryNextUrl();
+            };
+        }
+        tryNextUrl();
+    }
+
+    function removePhoto() {
+        extractedPhotoIds = [];
+        document.getElementById('photoAttachmentBlock').style.display = 'none';
+        document.getElementById('photoUrl').value = '';
+        document.getElementById('extractedInfo').style.display = 'none';
+        document.getElementById('previewImage').style.display = 'none';
+    }
+
+    function setupUIEventListeners() {
+        // Инициализация кастомных выпадающих меню
+        initCustomDropdowns();
+
+        // Кнопка показа поля ввода фото
+        document.getElementById('showPhotoInputBtn').addEventListener('click', function() {
+            const container = document.getElementById('photoUrlInputContainer');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Кнопка публикации
+        document.getElementById('publishBtn').addEventListener('click', publishPost);
+    }
+
+    function initCustomDropdowns() {
+        const dropdownToggles = document.querySelectorAll('[data-dropdown]');
+        
+        dropdownToggles.forEach(toggle => {
+            const menuId = toggle.getAttribute('data-dropdown');
+            const menu = document.querySelector(`[data-dropdown-menu="${menuId}"]`);
+            if (!menu) return;
+
+            // Открытие/закрытие при клике на кнопку
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Закрываем все другие меню
+                document.querySelectorAll('.dropdown-menu-content').forEach(m => {
+                    if (m !== menu) m.style.display = 'none';
+                });
+                // Переключаем текущее
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Обработка выбора пункта (для обычных кнопок, не чекбоксов)
+            menu.querySelectorAll('.dropdown-menu-item[data-value]').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const value = this.getAttribute('data-value');
+                    const text = this.textContent;
+                    
+                    // Обновляем текст в кнопке
+                    const span = toggle.querySelector('span');
+                    if (span) span.textContent = text;
+                    
+                    // Сохраняем выбранное значение
+                    toggle.setAttribute('data-selected', value);
+                    
+                    // Закрываем меню
+                    menu.style.display = 'none';
+                    
+                    // Специальная логика для режима публикации
+                    if (menuId === 'publishMode') {
+                        const scheduleSettings = document.getElementById('scheduleSettings');
+                        if (value === 'schedule') {
+                            scheduleSettings.style.display = 'block';
+                            const minDate = new Date(Date.now() + 5 * 60 * 1000);
+                            const datetimeInput = document.getElementById('scheduleDateTime');
+                            datetimeInput.min = minDate.toISOString().slice(0, 16);
+                            datetimeInput.value = new Date(Date.now() + 60 * 60 * 1000).toISOString().slice(0, 16);
+                        } else {
+                            scheduleSettings.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Закрытие всех меню при клике вне
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.dropdown-menu-content').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        });
+    }
+
+    // JSONP для VK API
+    function callVKAPI(method, params = {}) {
+        return new Promise((resolve, reject) => {
+            const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+            const script = document.createElement('script');
+            const baseParams = { access_token: VK_TOKEN, v: '5.199' };
+            const allParams = { ...baseParams, ...params, callback: callbackName };
+            const paramString = Object.keys(allParams)
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(allParams[key])}`)
+                .join('&');
+            const url = `https://api.vk.com/method/${method}?${paramString}`;
+            
+            window[callbackName] = function(data) {
+                delete window[callbackName];
+                document.body.removeChild(script);
+                if (data.error) {
+                    reject(new Error(`VK API: ${data.error.error_msg} (код: ${data.error.error_code})`));
+                } else {
+                    resolve(data.response);
+                }
+            };
+            
+            script.onerror = function() {
+                delete window[callbackName];
+                document.body.removeChild(script);
+                reject(new Error('Ошибка загрузки скрипта VK API'));
+            };
+            
+            script.src = url;
+            document.body.appendChild(script);
+        });
+    }
+
+   async function checkTokenValidity() {
+    try {
+        // Вместо wall.post используем groups.getById – он не публикует записи
+        const groupId = GROUP_ID; // '-233613781'
+        const numericId = groupId.startsWith('-') ? groupId.slice(1) : groupId;
+        await callVKAPI('groups.getById', {
+            group_id: numericId,
+            fields: 'can_post'
+        });
+        // Если запрос выполнен без ошибок, токен валиден и у приложения есть доступ
+        document.getElementById('apiStatus').className = 'api-status connected';
+        document.getElementById('apiStatus').innerHTML = `<i class="fas fa-check-circle"></i> Токен валиден`;
+    } catch (error) {
+        document.getElementById('apiStatus').className = 'api-status error';
+        document.getElementById('apiStatus').innerHTML = `<i class="fas fa-exclamation-triangle"></i> Ошибка: ${error.message}`;
+    }
+}
+
+    async function testConnection() {
+        try {
+            showMessage('Тестирование подключения...', 'success');
+            await callVKAPI('wall.post', {
+                owner_id: GROUP_ID,
+                message: 'Тестовый пост - проверка подключения',
+                publish_date: Math.floor(Date.now() / 1000) + 300
+            });
+            showMessage('✓ Подключение успешно! Можно публиковать посты', 'success');
+        } catch (error) {
+            if (error.message.includes('wall.post')) {
+                showMessage('✓ Подключение работает! Ошибка ожидаема для тестового поста', 'success');
+            } else {
+                showMessage('✗ Ошибка подключения: ' + error.message, 'error');
+            }
+        }
+    }
+
+    async function publishPost() {
+        const postText = document.getElementById('postText').value.trim();
+        const publishBtn = document.getElementById('publishBtn');
+        
+        if (!postText) {
+            showMessage('Введите текст поста', 'error');
+            return;
+        }
+        
+        publishBtn.classList.add('button-loading');
+        publishBtn.disabled = true;
+        
+        try {
+            const params = {
+                owner_id: GROUP_ID,
+                message: postText,
+                from_group: document.getElementById('fromGroup').checked ? 1 : 0,
+                signed: document.getElementById('signed').checked ? 1 : 0
+            };
+            
+            if (extractedPhotoIds.length > 0) {
+                params.attachments = extractedPhotoIds.map(id => `photo${id}`).join(',');
+            }
+            
+            const publishModeToggle = document.querySelector('[data-dropdown="publishMode"]');
+            const publishMode = publishModeToggle.getAttribute('data-selected') || 'now';
+            if (publishMode === 'schedule') {
+                const dateTimeInput = document.getElementById('scheduleDateTime');
+                if (dateTimeInput && dateTimeInput.value) {
+                    const dateTime = new Date(dateTimeInput.value);
+                    if (dateTime > new Date()) {
+                        params.publish_date = Math.floor(dateTime.getTime() / 1000);
+                    }
+                }
+            }
+            
+            const result = await callVKAPI('wall.post', params);
+            
+            let successMsg = `✓ Пост успешно опубликован в ВКонтакте! ID: ${result.post_id}`;
+            if (extractedPhotoIds.length > 0) {
+                successMsg += ` с ${extractedPhotoIds.length} фото`;
+            }
+            showMessage(successMsg, 'success');
+            addToLocalHistory(postText, result.post_id, true);
+            resetForm();
+        } catch (error) {
+            showMessage('✗ Ошибка публикации: ' + error.message, 'error');
+            addToLocalHistory(postText, 'error', false);
+        } finally {
+            publishBtn.classList.remove('button-loading');
+            publishBtn.disabled = false;
+        }
+    }
+
+    function addToLocalHistory(text, postId, success) {
+        const historyItem = {
+            id: Date.now(),
+            text: text,
+            postId: postId,
+            success: success,
+            timestamp: new Date().toISOString(),
+            date: new Date().toLocaleString('ru-RU', {
+                day: '2-digit', month: '2-digit', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            })
+        };
+        localHistory.unshift(historyItem);
+        localHistory = localHistory.slice(0, 50);
+        localStorage.setItem('vk_publish_history', JSON.stringify(localHistory));
+        loadLocalHistory();
+    }
+
+    function loadLocalHistory() {
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = '';
+        if (localHistory.length === 0) {
+            historyList.innerHTML = `<div class="history-item">
+                <div class="history-text-content">История публикаций пуста. После первой публикации здесь появится информация о ваших постах.</div>
+                <div class="history-meta"><span>--.--.---- --:--</span><span class="history-status">Нет данных</span></div>
+            </div>`;
+            return;
+        }
+        localHistory.forEach(item => {
+            const shortText = item.text.length > 120 ? item.text.substring(0, 117) + '...' : item.text;
+            const status = item.success ? '✅ Успешно' : '❌ Ошибка';
+            const statusColor = item.success ? '#2E7D32' : '#C62828';
+            const historyItemEl = document.createElement('div');
+            historyItemEl.className = 'history-item';
+            historyItemEl.innerHTML = `
+                <div class="history-text-content">${shortText}</div>
+                <div class="post-time">ID поста: ${item.postId}</div>
+                <div class="history-meta">
+                    <span>${item.date}</span>
+                    <span class="${item.success ? 'history-status' : 'history-status history-error'}" style="color: ${statusColor};">${status}</span>
+                </div>
+            `;
+            historyList.appendChild(historyItemEl);
+        });
+    }
+
+    function resetForm() {
+        document.getElementById('postText').value = '';
+        document.getElementById('charCount').textContent = '0';
+        document.getElementById('photoUrl').value = '';
+        document.getElementById('photoUrlInputContainer').style.display = 'none';
+        document.getElementById('scheduleSettings').style.display = 'none';
+        
+        // Сброс выпадающих меню
+        document.querySelector('[data-dropdown="publishMode"] span').textContent = 'Сейчас';
+        document.querySelector('[data-dropdown="publishMode"]').setAttribute('data-selected', 'now');
+        document.querySelector('[data-dropdown="topic"] span').textContent = 'Тематика';
+        document.querySelector('[data-dropdown="topic"]').setAttribute('data-selected', '');
+        document.querySelector('[data-dropdown="format"] span').textContent = 'Статья';
+        document.querySelector('[data-dropdown="format"]').setAttribute('data-selected', 'article');
+        
+        removePhoto();
+        localStorage.removeItem('vk_draft');
+    }
+
+    function showMessage(text, type) {
+        const messageEl = type === 'success' ? document.getElementById('successMessage') : document.getElementById('errorMessage');
+        messageEl.innerHTML = (type === 'success' ? '<i class="fas fa-check-circle"></i> ' : '<i class="fas fa-exclamation-triangle"></i> ') + text;
+        messageEl.style.display = 'block';
+        const otherEl = type === 'success' ? document.getElementById('errorMessage') : document.getElementById('successMessage');
+        otherEl.style.display = 'none';
+        setTimeout(() => { messageEl.style.display = 'none'; }, 5000);
+    }
+
+    function showNotification(text) {
+        const notification = document.getElementById('notification');
+        document.getElementById('notificationContent').textContent = text;
+        notification.style.display = 'block';
+        setTimeout(() => { notification.style.display = 'none'; }, 3000);
+    }
+
+    // Поиск по истории
+    document.getElementById('searchHistory').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        document.querySelectorAll('.history-item').forEach(item => {
+            const text = item.querySelector('.history-text-content')?.textContent.toLowerCase() || '';
+            item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+        });
+    });
+</script>
+
+<script src="scripts.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>

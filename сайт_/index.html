@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отель Атриум — Главная</title>
+    <link rel="stylesheet" href="stail.css">
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="nav">
+        <a href="index.html" class="logo">
+            <img src="png/logo.png" alt="Atrium Logo">
+        </a>
+        
+        <!-- Десктопное меню -->
+        <nav>
+            <a href="index.html" class="nav-link active">Главная</a>
+            <a href="rooms.html" class="nav-link">Номера</a>
+            <a href="conference.html" class="nav-link">Конференц-залы</a>
+            <a href="spa.html" class="nav-link">SPA-услуги</a>
+            <a href="news.html" class="nav-link">Новости</a>
+            <a href="contacts.html" class="nav-link">Контакты</a>
+            <a href="authorization.html" class="nav-link" id="loginBtn">Войти</a>
+            
+        </nav>
+        
+        <!-- Мобильное меню -->
+        <button class="menu-toggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<div class="page-offset"></div>
+
+<!-- ===== BANNER ===== -->
+<section class="banner">
+    <img src="png/Frame 9.png" 
+         alt="" class="banner-image">
+    <div class="banner-content fade-block">
+        <h1></h1>
+        <p></p>
+    </div>
+</section>
+
+<!-- ===== BOOKING FORM ===== -->
+<section class="booking-section fade-block">
+    <div class="container">
+
+        <h2 class="text-center mb-12">Поиск свободных номеров</h2>
+
+        <form class="booking-form" id="bookingForm">
+
+            <!-- ЗАЕЗД -->
+            <div class="input-group">
+                <label>Заезд</label>
+                <input type="text" id="checkIn" placeholder="Выберите дату" readonly>
+                <div class="calendar-popup" id="calendarIn"></div>
+            </div>
+
+            <!-- ВЫЕЗД -->
+            <div class="input-group">
+                <label>Выезд</label>
+                <input type="text" id="checkOut" placeholder="Выберите дату" readonly>
+                <div class="calendar-popup" id="calendarOut"></div>
+            </div>
+
+            <!-- ГОСТИ -->
+            <div class="input-group">
+                <label>Гости</label>
+                <select id="guests">
+                    <option value="1">1 гость</option>
+                    <option value="2" selected>2 гостя</option>
+                    <option value="3">3 гостя</option>
+                    <option value="4">4 гостя</option>
+                </select>
+            </div>
+
+            <!-- КНОПКА ПОИСКА -->
+            <div class="input-group">
+                <label style="visibility: hidden;">Поиск</label>
+                <button type="submit" class="btn-primary btn-search">Найти номер</button>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+<!-- SUCCESS TOAST -->
+<div class="toast-success" id="toastSuccess"></div>
+
+<!-- ===== ABOUT HOTEL ===== -->
+<section class="about-section container fade-block">
+    <h2 class="text-center mb-12">О гостинице</h2>
+    <p class="about-text">
+        «Атриум» — современная гостиница, созданная для вашего комфорта.
+        Уютная атмосфера, внимательный персонал и просторные номера сделают ваш отдых идеальным.
+    </p>
+
+    <div class="about-grid">
+        <div class="about-item">
+            <img src="png/Комфортные номера.png" alt="Комфортные номера">
+            <h3>Комфортные номера</h3>
+            <p>Тихие, стильные и просторные комнаты со всем необходимым для отдыха.</p>
+        </div>
+
+        <div class="about-item">
+            <img src="png/приятная атмосфера.png" alt="Приятная атмосфера">
+            <h3>Приятная атмосфера</h3>
+            <p>Светлые интерьеры, мягкие тона и стильный дизайн.</p>
+        </div>
+
+        <div class="about-item">
+            <img src="png/высокий сервис.png" alt="Высокий сервис">
+            <h3>Высокий сервис</h3>
+            <p>Круглосуточная поддержка и внимательное обслуживание.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== WHY SECTION ===== -->
+<section class="why-section container fade-block">
+    <h2 class="text-center mb-12">Почему выбирают нас?</h2>
+
+    <div class="why-grid">
+
+        <div class="why-item">
+            <div class="why-icon">⭐</div>
+            <h3>Высокие стандарты</h3>
+            <p>Комфорт и качество обслуживания на каждом шаге.</p>
+        </div>
+
+        <div class="why-item">
+            <div class="why-icon">🚗</div>
+            <h3>Бесплатная парковка</h3>
+            <p>Закрытая охраняемая парковочная зона.</p>
+        </div>
+
+        <div class="why-item">
+            <div class="why-icon">🍳</div>
+            <h3>Вкусные завтраки</h3>
+            <p>Каждое утро — разнообразные свежие блюда.</p>
+        </div>
+
+        <div class="why-item">
+            <div class="why-icon">📶</div>
+            <h3>Быстрый Wi-Fi</h3>
+            <p>Высокая скорость интернета в любом номере.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== POPULAR ROOMS ===== -->
+<section class="popular-section container fade-block">
+    <h2 class="text-center mb-12">Популярные номера</h2>
+
+    <div class="popular-grid">
+
+        <div class="popular-card">
+            <img src="png/стандарт1.jpeg" alt="Стандарт номер">
+            <h3>Стандарт</h3>
+            <p>Уютный номер для двоих.</p>
+            <a href="rooms.html" class="btn-primary btn-small">Подробнее</a>
+        </div>
+
+        <div class="popular-card">
+            <img src="png/комфорт обложка.jpeg" alt="Комфорт номер">
+            <h3>Комфорт</h3>
+            <p>Повышенный уровень удобства.</p>
+            <a href="rooms.html" class="btn-primary btn-small">Подробнее</a>
+        </div>
+
+        <div class="popular-card">
+            <img src="png/люкс обложка.jpeg" alt="Люкс номер">
+            <h3>Люкс</h3>
+            <p>Просторный номер с панорамным видом.</p>
+            <a href="rooms.html" class="btn-primary btn-small">Подробнее</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== INTERESTING NEARBY ===== -->
+<section class="interesting-section container fade-block">
+    <h2 class="text-center mb-12">Интересное рядом</h2>
+
+    <div class="attractions-slider">
+        <div class="slider-container">
+            <div class="slider-track">
+                <!-- Достопримечательность 1 -->
+                <div class="attraction-slide active">
+                    <div class="attraction-image">
+                        <img src="png/центральный парк.png" alt="Парк культуры и отдыха">
+                    </div>
+                    <div class="attraction-info">
+                        <h3>Центральный парк</h3>
+                        <p>Всего в 5 минутах ходьбы от отеля расположен живописный парк с фонтанами, аллеями и зонами для отдыха. Идеальное место для утренних пробежек и вечерних прогулок.</p>
+                        <div class="attraction-details">
+                            <div class="detail">
+                                <span class="detail-icon">🚶</span>
+                                <span>5 минут пешком</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🕒</span>
+                                <span>Круглосуточно</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🎫</span>
+                                <span>Бесплатно</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Остальные слайды остаются без изменений -->
+                <!-- Достопримечательность 2 -->
+                <div class="attraction-slide">
+                    <div class="attraction-image">
+                        <img src="png/исторический музей.png" alt="Исторический музей">
+                    </div>
+                    <div class="attraction-info">
+                        <h3>Исторический музей</h3>
+                        <p>Крупнейший музей города с уникальной коллекцией артефактов. Постоянные и временные выставки рассказывают об истории региона с древнейших времен до наших дней.</p>
+                        <div class="attraction-details">
+                            <div class="detail">
+                                <span class="detail-icon">🚶</span>
+                                <span>10 минут пешком</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🕒</span>
+                                <span>10:00 - 18:00</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🎫</span>
+                                <span>от 300 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Достопримечательность 3 -->
+                <div class="attraction-slide">
+                    <div class="attraction-image">
+                        <img src="png/Галерея.jpg" alt="Торговый центр">
+                    </div>
+                    <div class="attraction-info">
+                        <h3>Торговый центр "Галерея"</h3>
+                        <p>Современный торгово-развлекательный комплекс с бутиками, кинотеатром, фуд-кортом и детской зоной. Более 200 магазинов и ресторанов на любой вкус.</p>
+                        <div class="attraction-details">
+                            <div class="detail">
+                                <span class="detail-icon">🚶</span>
+                                <span>7 минут пешком</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🕒</span>
+                                <span>10:00 - 22:00</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🎫</span>
+                                <span>Бесплатный вход</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Достопримечательность 4 -->
+                <div class="attraction-slide">
+                    <div class="attraction-image">
+                        <img src="png/Театр.png" alt="Театр оперы и балета">
+                    </div>
+                    <div class="attraction-info">
+                        <h3>Театр оперы и балета</h3>
+                        <p>Великолепное здание в стиле неоклассицизма, где проходят спектакли мирового уровня. В репертуаре - классические и современные постановки.</p>
+                        <div class="attraction-details">
+                            <div class="detail">
+                                <span class="detail-icon">🚶</span>
+                                <span>12 минут пешком</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🕒</span>
+                                <span>По расписанию</span>
+                            </div>
+                            <div class="detail">
+                                <span class="detail-icon">🎫</span>
+                                <span>от 800 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <!-- НАВИГАЦИЯ СЛАЙДЕРА - КНОПКИ ПО БОКАМ, ТОЧКИ ВНИЗУ -->
+<div class="slider-nav-buttons">
+    <button class="slider-nav-btn prev" onclick="prevAttraction()" aria-label="Предыдущий слайд">
+        <span>❮</span>
+    </button>
+    <button class="slider-nav-btn next" onclick="nextAttraction()" aria-label="Следующий слайд">
+        <span>❯</span>
+    </button>
+</div>
+
+<div class="slider-dots-container">
+    <div class="slider-dots">
+        <span class="dot active" onclick="goToSlide(0)" aria-label="Перейти к слайду 1"></span>
+        <span class="dot" onclick="goToSlide(1)" aria-label="Перейти к слайду 2"></span>
+        <span class="dot" onclick="goToSlide(2)" aria-label="Перейти к слайду 3"></span>
+        <span class="dot" onclick="goToSlide(3)" aria-label="Перейти к слайду 4"></span>
+    </div>
+</div>
+    </div>
+</section>
+
+<!-- ===== FAQ SECTION ===== -->
+<section class="faq-section container fade-block">
+    <h2 class="text-center mb-12">Часто задаваемые вопросы</h2>
+
+    <div class="faq-container">
+        <!-- Вопрос 1 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Какое время заезда и выезда?</h3>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Заезд осуществляется с 14:00, выезд - до 12:00. При раннем заезде или позднем выезде возможна дополнительная плата. Также вы можете заранее забронировать ранний заезд или поздний выезд за дополнительную плату.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вопрос 2 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Есть ли парковка для гостей?</h3>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Да, мы предоставляем бесплатную охраняемую парковку для всех наших гостей. Количество мест ограничено, поэтому рекомендуем заранее уточнить наличие свободных мест при бронировании.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вопрос 3 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Можно ли с животными?</h3>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Да, мы разрешаем размещение с домашними животными. Дополнительная плата за уборку составляет 1000 ₽. Просим заранее уведомлять о приезде с питомцем и соблюдать правила содержания животных в номере.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вопрос 4 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Какие способы оплаты принимаются?</h3>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Мы принимаем наличные (рубли), банковские карты Visa, MasterCard, Мир, а также безналичный расчет для юридических лиц. Также доступна оплата через онлайн-сервисы.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вопрос 5 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Есть ли трансфер от аэропорта?</h3>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Да, мы предоставляем услугу трансфера от/до аэропорта и вокзала. Стоимость зависит от типа автомобиля и расстояния. Забронировать трансфер можно при оформлении бронирования или отдельно через администратора.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вопрос 6 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Можно ли отменить бронирование?</h3>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content">
+                    <p>Бесплатная отмена возможна за 48 часов до даты заезда. При отмене позднее взимается штраф в размере стоимости первой ночи. Детальные условия отмены указаны в вашем подтверждении бронирования.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>О гостинице «Атриум»</h3>
+            <p>Современная гостиница в центре города, предлагающая комфортабельные номера и высокий уровень сервиса для вашего идеального отдыха.</p>
+            <div class="social-links">
+                <a href="https://vk.com/club233613781" target="_blank">VK</a>
+                <a href="#">Rutube</a>
+                <a href="#">Max</a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Наши услуги</h3>
+            <ul>
+                <li><a href="rooms.html">Бронирование номеров</a></li>
+                <li><a href="conference.html">Конференц-залы</a></li>
+                <li><a href="spa.html">SPA-услуги</a></li>
+                <li><a href="#">Трансфер от/до аэропорта</a></li>
+                <li><a href="#">Ресторан</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Быстрые ссылки</h3>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="rooms.html">Номера</a></li>
+                <li><a href="conference.html">Конференц-залы</a></li>
+                <li><a href="spa.html">SPA-услуги</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section footer-contact">
+            <h3>Контакты</h3>
+            <p>📍 г. Москва, ул. Примерная, 45</p>
+            <p>📞 +7 (495) 555-33-22</p>
+            <p>✉️ info@atriumhotel.ru</p>
+            <p>🕒 Круглосуточно</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>© 2025 Гостиница «Атриум». Все права защищены.</p>
+    </div>
+</footer>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <img src="png/logo.png" alt="Atrium Logo" class="mobile-logo-img">
+        <button class="mobile-close" aria-label="Закрыть меню">✕</button>
+    </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link active">🏠 Главная</a>
+        <a href="rooms.html" class="mobile-nav-link">🛏️ Номера</a>
+        <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>
+        
+        
+        <a href="news.html" class="mobile-nav-link">📰 Новости</a>
+        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        
+        
+        <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
+         
+    </nav>
+</div>
+
+<script src="scripts.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SPA-услуги | Атриум</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stail.css">
+  <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
+</head>
+<body>
+
+<header class="header">
+  <div class="nav">
+    <a href="index.html" class="logo">
+      <img src="png/logo.png" alt="Atrium Logo">
+    </a>
+    
+    <!-- Десктопное меню -->
+    <nav>
+      <a href="index.html" class="nav-link">Главная</a>
+      <a href="rooms.html" class="nav-link">Номера</a>
+      <a href="conference.html" class="nav-link">Конференц-залы</a>
+      <a href="spa.html" class="nav-link active">SPA-услуги</a>
+      <a href="news.html" class="nav-link">Новости</a>
+      <a href="contacts.html" class="nav-link">Контакты</a>
+      <a href="authorization.html" class="nav-link" id="loginBtn">Войти</a>
+    </nav>
+    
+    <!-- Мобильное меню -->
+    <button class="menu-toggle" aria-label="Открыть меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+<section class="services-section">
+  <div class="container">
+    <h1 class="text-center fade-block">SPA-услуги</h1>
+    <p class="services-intro fade-block">Расслабление и восстановление в нашем SPA-комплексе</p>
+
+    <div class="services-grid">
+      <!-- Массаж -->
+      <div class="service-card fade-block">
+        <div class="service-image">
+          <img src="png/Spa массаж.jpeg" alt="SPA массаж">
+        </div>
+        <div class="service-info">
+          <h3>SPA массаж</h3>
+          <p>Профессиональный массаж для снятия напряжения и восстановления энергии. Используются ароматические масла и техники релаксации.</p>
+          <div class="service-features">
+            <div class="feature">
+              <span class="feature-icon">⏱️</span>
+              <span>60-90 минут</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">🌿</span>
+              <span>натуральные масла</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">🎵</span>
+              <span>релакс музыка</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price">от 3 500 ₽</span>
+            <button class="btn-primary" onclick="openPremiumModal('spa-massage')">Подробнее</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Банный комплекс -->
+      <div class="service-card fade-block">
+        <div class="service-image">
+          <img src="png/Банный комплекс .jpeg" alt="Банный комплекс">
+        </div>
+        <div class="service-info">
+          <h3>Банный комплекс</h3>
+          <p>Русская баня и финская сауна с бассейном. Идеальное место для детоксикации и восстановления после напряженного дня.</p>
+          <div class="service-features">
+            <div class="feature">
+              <span class="feature-icon">🔥</span>
+              <span>русская баня</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">🧖</span>
+              <span>финская сауна</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">💧</span>
+              <span>бассейн</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price">от 2 000 ₽/час</span>
+            <button class="btn-primary" onclick="openPremiumModal('bath-complex')">Подробнее</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Уходовые процедуры -->
+      <div class="service-card fade-block">
+        <div class="service-image">
+          <img src="png/Уходовые процедуры.jpeg" alt="Уходовые процедуры">
+        </div>
+        <div class="service-info">
+          <h3>Уходовые процедуры</h3>
+          <p>Профессиональные уходовые процедуры для лица и тела. Индивидуальный подбор программ для вашего типа кожи.</p>
+          <div class="service-features">
+            <div class="feature">
+              <span class="feature-icon">💆</span>
+              <span>уход за лицом</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✨</span>
+              <span>обертывания</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">🧴</span>
+              <span>премиум косметика</span>
+            </div>
+          </div>
+          <div class="service-price">
+            <span class="price">от 4 500 ₽</span>
+            <button class="btn-primary" onclick="openPremiumModal('care-procedures')">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Дополнительные услуги -->
+    <div class="additional-services">
+      <h2 class="text-center fade-block">Дополнительные услуги</h2>
+      <div class="services-list">
+        <div class="additional-service fade-block">
+          <div class="service-icon">🧘</div>
+          <h4>Йога и медитация</h4>
+          <p>Индивидуальные и групповые занятия с профессиональным инструктором</p>
+        </div>
+        <div class="additional-service fade-block">
+          <div class="service-icon">🏊</div>
+          <h4>Бассейн</h4>
+          <p>Крытый бассейн с подогревом и зоной отдыха</p>
+        </div>
+        <div class="additional-service fade-block">
+          <div class="service-icon">💅</div>
+          <h4>Маникюр и педикюр</h4>
+          <p>Профессиональный уход за руками и ногами</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPA-пакеты -->
+    <div class="spa-packages">
+      <h2 class="text-center fade-block">SPA-пакеты</h2>
+      <div class="packages-grid">
+        <div class="package-card fade-block">
+          <h3>«Релакс»</h3>
+          <div class="package-price">8 900 ₽</div>
+          <ul class="package-features">
+            <li>SPA-массаж (60 мин)</li>
+            <li>Уход за лицом</li>
+            <li>Посещение бани</li>
+            <li>Травяной чай</li>
+          </ul>
+          <button class="btn-primary" onclick="openPremiumModal('relax-package')">Подробнее</button>
+        </div>
+        
+        <div class="package-card featured fade-block">
+          <div class="popular-badge">Популярный</div>
+          <h3>«Премиум»</h3>
+          <div class="package-price">12 500 ₽</div>
+          <ul class="package-features">
+            <li>SPA-массаж (90 мин)</li>
+            <li>Комплексный уход за лицом</li>
+            <li>Обертывание</li>
+            <li>Банный комплекс (2 часа)</li>
+            <li>Фруктовая тарелка</li>
+          </ul>
+          <button class="btn-primary" onclick="openPremiumModal('premium-package')">Подробнее</button>
+        </div>
+        
+        <div class="package-card fade-block">
+          <h3>«Выходного дня»</h3>
+          <div class="package-price">15 000 ₽</div>
+          <ul class="package-features">
+            <li>Все процедуры пакета «Премиум»</li>
+            <li>Йога-сессия</li>
+            <li>Обед в ресторане</li>
+            <li>Доступ в бассейн на весь день</li>
+          </ul>
+          <button class="btn-primary" onclick="openPremiumModal('weekend-package')">Подробнее</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Модальные окна для услуг -->
+<!-- SPA массаж -->
+<div id="modal-spa-massage" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">SPA массаж</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/Spa\ массаж.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/Spa\ массаж1.jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/SPA\ массаж2.jpg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/SPA\ массаж3.jpg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">⏱️</div>
+                    <span class="premium-parameter-text">60-90 минут</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🌿</div>
+                    <span class="premium-parameter-text">Натуральные масла</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🎵</div>
+                    <span class="premium-parameter-text">Релакс музыка</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💰</div>
+                    <span class="premium-parameter-text">от 3 500 ₽</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Профессиональный массаж для снятия напряжения и восстановления энергии. Используются ароматические масла и техники релаксации. 
+                Наши опытные массажисты помогут вам расслабиться и восстановить силы. Сеанс проводится в специально оборудованном кабинете с приятной атмосферой.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Что включено</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Основные техники</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Классический массаж</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ароматерапия</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Расслабляющие техники</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Индивидуальный подбор масел</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Расслабляющая музыка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Травяной чай после сеанса</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="redirectToBooking('SPA массаж')">Записаться</button>
+        </div>
+    </div>
+</div>
+
+<!-- Банный комплекс -->
+<div id="modal-bath-complex" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Банный комплекс</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/Банный\ комплексобложка\ .jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/Банный\ комплекс1\ .jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/Банный\ комплекс2\ .jpeg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/Банный\ комплекс3.jpg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">⏱️</div>
+                    <span class="premium-parameter-text">от 1 часа</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🔥</div>
+                    <span class="premium-parameter-text">Русская баня</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🧖</div>
+                    <span class="premium-parameter-text">Финская сауна</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💰</div>
+                    <span class="premium-parameter-text">от 2 000 ₽/час</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Русская баня и финская сауна с бассейном. Идеальное место для детоксикации и восстановления после напряженного дня. 
+                Наш банный комплекс оборудован всем необходимым для комфортного отдыха и оздоровления.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Что включено</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Банные зоны</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Русская парная с вениками</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Финская сауна</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Бассейн с подогревом</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Ароматические масла</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Травяные чаи</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Зона отдыха</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="redirectToBooking('Банный комплекс')">Забронировать</button>
+        </div>
+    </div>
+</div>
+
+<!-- Уходовые процедуры -->
+<div id="modal-care-procedures" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Уходовые процедуры</h1>
+        </div>
+        
+        <div class="premium-gallery-section">
+            <div class="premium-gallery-container">
+                <div class="premium-main-image" style="background-image: url('png/Уходовые\ процедуры.jpeg');"></div>
+                <div class="premium-side-images">
+                    <div class="premium-side-image" style="background-image: url('png/Уходовые\ процедуры1.jpg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/Уходовые\ процедуры2.jpg');"></div>
+                    <div class="premium-side-image" style="background-image: url('png/Уходовые\ процедуры3.jpg');"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">⏱️</div>
+                    <span class="premium-parameter-text">60-120 минут</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💆</div>
+                    <span class="premium-parameter-text">Уход за лицом и телом</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">🧴</div>
+                    <span class="premium-parameter-text">Премиум косметика</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💰</div>
+                    <span class="premium-parameter-text">от 4 500 ₽</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Профессиональные уходовые процедуры для лица и тела. Индивидуальный подбор программ для вашего типа кожи. 
+                Используем только сертифицированную косметику премиум-класса от ведущих мировых брендов.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Что включено</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Процедуры для лица</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Чистка и уход</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Омолаживающие процедуры</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Увлажнение и питание</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Процедуры для тела</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Обертывания</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Скрабирование</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Антицеллюлитные программы</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="redirectToBooking('Уходовые процедуры')">Записаться</button>
+        </div>
+    </div>
+</div>
+
+<!-- Пакет Релакс -->
+<div id="modal-relax-package" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Пакет «Релакс»</h1>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">⏱️</div>
+                    <span class="premium-parameter-text">3-4 часа</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">1-2 человека</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">✨</div>
+                    <span class="premium-parameter-text">4 процедуры</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💰</div>
+                    <span class="premium-parameter-text">8 900 ₽</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Идеальный пакет для тех, кто хочет расслабиться и снять напряжение. Включает SPA-массаж, уход за лицом и посещение бани с травяным чаем. 
+                Полное погружение в атмосферу релакса и восстановления.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Что включено в пакет</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Основные процедуры</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>SPA-массаж (60 мин)</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Уход за лицом</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Посещение бани</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Травяной чай</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Халат и тапочки</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Доступ в зону отдыха</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="redirectToBooking('Пакет «Релакс»')">Выбрать пакет</button>
+        </div>
+    </div>
+</div>
+
+<!-- Пакет Премиум -->
+<div id="modal-premium-package" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Пакет «Премиум»</h1>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">⏱️</div>
+                    <span class="premium-parameter-text">4-5 часов</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">1-2 человека</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">✨</div>
+                    <span class="premium-parameter-text">5 процедур</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💰</div>
+                    <span class="premium-parameter-text">12 500 ₽</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Расширенный пакет для настоящих ценителей SPA-отдыха. Включает все процедуры пакета «Релакс» плюс дополнительные премиум-услуги. 
+                Максимальное расслабление и восстановление для вашего тела и духа.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Что включено в пакет</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Основные процедуры</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>SPA-массаж (90 мин)</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Комплексный уход за лицом</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Обертывание</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Банный комплекс (2 часа)</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Фруктовая тарелка</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Премиум косметика</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="redirectToBooking('Пакет «Премиум»')">Выбрать пакет</button>
+        </div>
+    </div>
+</div>
+
+<!-- Пакет Выходного дня -->
+<div id="modal-weekend-package" class="premium-modal">
+    <div class="premium-modal-content">
+        <span class="premium-close-modal">&times;</span>
+        
+        <div class="premium-modal-header">
+            <h1 class="premium-modal-title">Пакет «Выходного дня»</h1>
+        </div>
+        
+        <div class="premium-parameters-section">
+            <div class="premium-parameters-grid">
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">⏱️</div>
+                    <span class="premium-parameter-text">Весь день</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">👥</div>
+                    <span class="premium-parameter-text">1-2 человека</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">✨</div>
+                    <span class="premium-parameter-text">Все процедуры + обед</span>
+                </div>
+                <div class="premium-parameter-item">
+                    <div class="premium-parameter-icon">💰</div>
+                    <span class="premium-parameter-text">15 000 ₽</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-description-section">
+            <p class="premium-description-text">
+                Идеальный способ провести выходной день в атмосфере полного релакса. Включает все процедуры пакета «Премиум» плюс йога-сессию, 
+                обед в нашем ресторане и неограниченный доступ в бассейн. Настоящий праздник для тела и души.
+            </p>
+        </div>
+        
+        <div class="premium-features-section">
+            <h2 class="premium-features-title">Что включено в пакет</h2>
+            <div class="premium-features-grid">
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Все процедуры пакета «Премиум»</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>SPA-массаж (90 мин)</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Комплексный уход за лицом</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Обертывание</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="premium-feature-category">
+                    <h3 class="premium-category-title">Дополнительно</h3>
+                    <ul class="premium-feature-list">
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Йога-сессия</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Обед в ресторане</span>
+                        </li>
+                        <li class="premium-feature-item">
+                            <div class="premium-feature-icon">✓</div>
+                            <span>Доступ в бассейн на весь день</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="premium-booking-section">
+            <button class="premium-booking-button" onclick="redirectToBooking('Пакет «Выходного дня»')">Выбрать пакет</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>О гостинице «Атриум»</h3>
+      <p>Современная гостиница в центре города, предлагающая комфортабельные номера и высокий уровень сервиса для вашего идеального отдыха.</p>
+      <div class="social-links">
+        <a href="https://vk.com/club233613781" target="_blank">VK</a>
+        <a href="#">Instagram</a>
+        <a href="#">Telegram</a>
+      </div>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Наши услуги</h3>
+      <ul>
+        <li><a href="rooms.html">Бронирование номеров</a></li>
+        <li><a href="conference.html">Конференц-залы</a></li>
+        <li><a href="spa.html">SPA-услуги</a></li>
+        <li><a href="#">Трансфер от/до аэропорта</a></li>
+        <li><a href="#">Ресторан</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h3>Быстрые ссылки</h3>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="rooms.html">Номера</a></li>
+        <li><a href="conference.html">Конференц-залы</a></li>
+        <li><a href="spa.html">SPA-услуги</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section footer-contact">
+      <h3>Контакты</h3>
+      <p>📍 г. Москва, ул. Примерная, 45</p>
+      <p>📞 +7 (495) 555-33-22</p>
+      <p>✉️ info@atriumhotel.ru</p>
+      <p>🕒 Круглосуточно</p>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>© 2025 Гостиница «Атриум». Все права защищены.</p>
+  </div>
+</footer>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <img src="png/logo.png" alt="Atrium Logo" class="mobile-logo-img">
+        <button class="mobile-close" aria-label="Закрыть меню">✕</button>
+    </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">🏠 Главная</a>
+        <a href="rooms.html" class="mobile-nav-link active">🛏️ Номера</a>
+        <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>
+        
+        <div class="mobile-divider"></div>
+        
+        <a href="news.html" class="mobile-nav-link">📰 Новости</a>
+        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        
+        <div class="mobile-divider"></div>
+        
+        <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
+    </nav>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="scripts.js"></script>
+
+<script>
+// Используем функции из scripts.js для модальных окон
+// Добавляем обработчики событий для модальных окон spa.html
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Закрытие модальных окон по кнопке
+    document.querySelectorAll('.premium-close-modal').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const modal = this.closest('.premium-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Закрытие при клике вне модального окна
+    document.querySelectorAll('.premium-modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Закрытие по ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.premium-modal').forEach(modal => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+});
+
+// Функция для открытия модальных окон (совместимость с rooms.html)
+function openPremiumModal(modalType) {
+    const modalId = `modal-${modalType}`;
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Функция для перенаправления на страницу бронирования
+function redirectToBooking(serviceName) {
+    // Формируем URL с параметрами
+    const params = new URLSearchParams({
+        service: serviceName,
+        type: 'spa'
+    });
+    
+    // Перенаправляем на страницу бронирования
+    window.location.href = `booking.html?${params.toString()}`;
+}
+
+// Функция бронирования услуг (оставлена для совместимости)
+function bookService(serviceName) {
+    redirectToBooking(serviceName);
+}
+
+// Toast уведомления
+function showToast(msg) {
+    const toast = document.getElementById("toast");
+    if (toast) {
+        toast.textContent = msg;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+}
+
+// Анимации при загрузке
+window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+    
+    const serviceCards = document.querySelectorAll('.service-card, .package-card, .additional-service');
+    serviceCards.forEach((card, index) => {
+        card.classList.add('fade-block');
+        setTimeout(() => {
+            if (card.getBoundingClientRect().top < window.innerHeight - 150) {
+                card.classList.add('show-anim');
+            }
+        }, index * 100);
+    });
+});
+
+// Инициализация анимаций при скролле
+function animateOnScrollSpa() {
+    let blocks = document.querySelectorAll('.fade-block');
+    let windowHeight = window.innerHeight;
+    
+    blocks.forEach(block => {
+        let elementTop = block.getBoundingClientRect().top;
+        let elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+            block.classList.add('show-anim');
+        }
+    });
+}
+
+window.addEventListener("scroll", animateOnScrollSpa);
+setTimeout(animateOnScrollSpa, 300);
+
+// Глобальные функции
+window.openPremiumModal = openPremiumModal;
+window.bookService = bookService;
+window.redirectToBooking = redirectToBooking;
+window.showToast = showToast;
+</script>
+<script src="scripts.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>
