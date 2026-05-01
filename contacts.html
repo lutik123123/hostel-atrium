@@ -110,7 +110,7 @@
   </div>
 </footer>
 
-<!-- Мобильное меню -->
+<!-- Мобильное меню (обновлённое) -->
 <div class="mobile-menu-overlay"></div>
 <div class="mobile-menu">
     <div class="mobile-menu-header">
@@ -119,25 +119,24 @@
     </div>
     <nav class="mobile-nav">
         <a href="index.html" class="mobile-nav-link">🏠 Главная</a>
-        <a href="rooms.html" class="mobile-nav-link active">🛏️ Номера</a>
+        <a href="rooms.html" class="mobile-nav-link">🛏️ Номера</a>
         <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
         <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>  
         <a href="news.html" class="mobile-nav-link">📰 Новости</a>
-        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        <a href="contacts.html" class="mobile-nav-link active">📍 Контакты</a>
         <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
     </nav>
 </div>
 
 <div id="toast" class="toast">Спасибо, что делаете нас лучше 💛</div>
 
+<!-- Подключаем скрипты -->
 <script src="scripts.js"></script>
-
 <script>
 // Анимации при загрузке
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");
   
-  // Анимация для элементов контактов
   const contactElements = document.querySelectorAll('.fade-block');
   contactElements.forEach((element, index) => {
     setTimeout(() => {
@@ -148,7 +147,6 @@ window.addEventListener("load", () => {
   });
 });
 
-// Инициализация анимаций при скролле
 function animateOnScrollContacts() {
   let blocks = document.querySelectorAll('.fade-block');
   let windowHeight = window.innerHeight;
@@ -163,10 +161,7 @@ function animateOnScrollContacts() {
   });
 }
 
-// Добавляем обработчик скролла
 window.addEventListener("scroll", animateOnScrollContacts);
-
-// Дополнительный вызов для видимых элементов
 setTimeout(animateOnScrollContacts, 300);
 
 // Обработчик формы
@@ -179,55 +174,7 @@ form.addEventListener("submit", e => {
   setTimeout(() => toast.classList.remove("show"), 3000);
   form.reset();
 });
-
-// Инициализация мобильного меню
-function initMobileMenu() {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileOverlay = document.querySelector('.mobile-menu-overlay');
-    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-    
-    if (menuToggle && mobileMenu && mobileOverlay) {
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            mobileOverlay.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        mobileOverlay.addEventListener('click', function() {
-            menuToggle.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            this.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                menuToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                mobileOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                mobileOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-}
-
-// Инициализация при загрузке DOM
-document.addEventListener('DOMContentLoaded', function() {
-    initMobileMenu();
-});
 </script>
-<script src="scripts.js"></script>
 <script src="auth.js"></script>
 </body>
 </html>

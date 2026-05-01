@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Подтверждение бронирования | Атриум</title>
   <link rel="stylesheet" href="stail.css">
+  <!-- Подключаем мобильные стили -->
+  <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
 </head>
 <body>
 
@@ -82,9 +84,9 @@
       <h3>Наши услуги</h3>
       <ul>
         <li><a href="rooms.html">Бронирование номеров</a></li>
-        <li><a href="#">Конференц-залы</a></li>
+        <li><a href="conference.html">Конференц-залы</a></li>
+        <li><a href="spa.html">SPA-услуги</a></li>
         <li><a href="#">Трансфер от/до аэропорта</a></li>
-        <li><a href="#">SPA-услуги</a></li>
         <li><a href="#">Ресторан</a></li>
       </ul>
     </div>
@@ -114,11 +116,29 @@
   </div>
 </footer>
 
+<!-- ===== Мобильное меню ===== -->
+<div class="mobile-menu-overlay"></div>
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <img src="png/logo.png" alt="Atrium Logo" class="mobile-logo-img">
+        <button class="mobile-close" aria-label="Закрыть меню">✕</button>
+    </div>
+    <nav class="mobile-nav">
+        <a href="index.html" class="mobile-nav-link">🏠 Главная</a>
+        <a href="rooms.html" class="mobile-nav-link">🛏️ Номера</a>
+        <a href="conference.html" class="mobile-nav-link">💼 Конференц-залы</a>
+        <a href="spa.html" class="mobile-nav-link">💆 SPA-услуги</a>
+        <a href="news.html" class="mobile-nav-link">📰 Новости</a>
+        <a href="contacts.html" class="mobile-nav-link">📍 Контакты</a>
+        <a href="authorization.html" class="mobile-nav-link">🔐 Войти</a>
+    </nav>
+</div>
+
+<script src="scripts.js"></script>
 <script>
 window.addEventListener("load",() => {
   document.body.classList.add("loaded");
   
-  // Получаем параметры из URL
   const urlParams = new URLSearchParams(window.location.search);
   const room = urlParams.get('room') || 'Стандарт';
   const service = urlParams.get('service');
@@ -127,18 +147,13 @@ window.addEventListener("load",() => {
   const checkout = urlParams.get('checkout') || '18.11.2024';
   const guests = urlParams.get('guests') || '2 гостя';
 
-  // Заполняем данные бронирования
   if (service && type) {
-    // Если бронируется услуга (SPA или конференц-зал)
     document.getElementById('bookingRoom').textContent = service;
     document.getElementById('bookingCheckin').textContent = 'По согласованию';
     document.getElementById('bookingCheckout').textContent = 'По согласованию';
     document.getElementById('bookingGuests').textContent = 'Не указано';
-    
-    // Меняем заголовок для услуг
     document.querySelector('.confirm-section h2').textContent = 'Подтверждение бронирования услуги';
   } else {
-    // Если бронируется номер
     document.getElementById('bookingRoom').textContent = room;
     document.getElementById('bookingCheckin').textContent = checkin;
     document.getElementById('bookingCheckout').textContent = checkout;
@@ -147,20 +162,14 @@ window.addEventListener("load",() => {
 
   const form = document.getElementById("confirmForm");
   const thank = document.getElementById("thankBox");
-
   form.addEventListener("submit", e => {
     e.preventDefault();
     thank.classList.add("show");
-    setTimeout(() => {
-      thank.classList.remove("show");
-    }, 5000);
+    setTimeout(() => thank.classList.remove("show"), 5000);
   });
 });
 </script>
-<script src="scripts.js"></script>
 <script src="auth.js"></script>
-
 
 </body>
 </html>
-
