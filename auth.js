@@ -37,7 +37,7 @@ class AuthManager {
             {
                 id: 1,
                 firstName: 'Администратор',
-                lastName: 'Отеля',
+                lastName: 'гостиницы',
                 phone: '+7 (999) 123-45-67',
                 email: 'admin@atrium.ru',
                 password: 'admin123',
