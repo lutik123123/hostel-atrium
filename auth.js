@@ -1106,13 +1106,9 @@ window.openRoomModal = function(roomType) {
 };
 
 // ИЗМЕНЕНО: Теперь при нажатии "Забронировать" перенаправляем на booking.html
-window.bookRoom = function(roomName) {
-    if (!roomName) {
-        console.error('Room name is required');
-        return;
-    }
+window.bookService = function(serviceName, serviceType = 'spa') {
+    if (!serviceName) return;
 
-    // Если пользователь не авторизован – перенаправляем на страницу входа
     if (!window.authManager || !window.authManager.currentUser) {
         window.authManager.showNotification('Для бронирования необходимо войти в аккаунт', true);
         setTimeout(() => {
@@ -1120,6 +1116,26 @@ window.bookRoom = function(roomName) {
         }, 1500);
         return;
     }
+
+    const bookingData = {
+        roomName: serviceName, // используем поле roomName как название услуги
+        type: serviceType,     // 'spa' или 'conference'
+        checkin: new Date().toLocaleDateString('ru-RU'),
+        checkout: new Date().toLocaleDateString('ru-RU'),
+        guests: '1 человек'
+    };
+
+    const result = window.authManager.createBooking(bookingData);
+    if (result) {
+        window.authManager.showNotification(`Услуга "${serviceName}" успешно забронирована!`);
+        document.querySelectorAll('.premium-modal, .room-modal, .service-modal, .swiss-modal').forEach(modal => {
+            modal.classList.remove('active');
+        });
+        // setTimeout(() => { window.location.href = 'profile.html'; }, 2000);
+    } else {
+        window.authManager.showNotification('Ошибка бронирования.', true);
+    }
+};
 
     // Получаем даты из формы (если они есть на странице)
     const checkinInput = document.getElementById('checkIn');
