@@ -1111,22 +1111,47 @@ window.bookRoom = function(roomName) {
         console.error('Room name is required');
         return;
     }
-    
-    const urlParams = new URLSearchParams(window.location.search);
+
+    // Если пользователь не авторизован – перенаправляем на страницу входа
+    if (!window.authManager || !window.authManager.currentUser) {
+        window.authManager.showNotification('Для бронирования необходимо войти в аккаунт', true);
+        setTimeout(() => {
+            window.location.href = 'authorization.html';
+        }, 1500);
+        return;
+    }
+
+    // Получаем даты из формы (если они есть на странице)
+    const checkinInput = document.getElementById('checkIn');
+    const checkoutInput = document.getElementById('checkOut');
+    const guestsSelect = document.getElementById('guests');
+    const checkin = checkinInput ? checkinInput.value : new Date().toLocaleDateString('ru-RU');
+    const checkout = checkoutInput ? checkoutInput.value : new Date().toLocaleDateString('ru-RU');
+    const guests = guestsSelect ? guestsSelect.options[guestsSelect.selectedIndex].text : '2 гостя';
+
+    // Формируем данные
     const bookingData = {
         roomName: roomName,
-        checkin: urlParams.get('checkin') || '15.11.2024',
-        checkout: urlParams.get('checkout') || '18.11.2024',
-        guests: urlParams.get('guests') || '2 гостя'
+        checkin: checkin,
+        checkout: checkout,
+        guests: guests,
+        type: 'room'
     };
-    
-    if (window.authManager) {
-        window.authManager.handleRoomBooking(bookingData);
+
+    // Создаём бронирование через AuthManager
+    const result = window.authManager.createBooking(bookingData);
+
+    if (result) {
+        window.authManager.showNotification('Номер успешно забронирован!');
+        // Закрываем все модальные окна
+        document.querySelectorAll('.premium-modal, .room-modal, .service-modal, .swiss-modal').forEach(modal => {
+            modal.classList.remove('active');
+        });
+        // Опционально: перенаправить в профиль через пару секунд
+        // setTimeout(() => { window.location.href = 'profile.html'; }, 2000);
+    } else {
+        window.authManager.showNotification('Ошибка бронирования. Попробуйте ещё раз.', true);
     }
-    
-    document.querySelectorAll('.premium-modal, .room-modal, .service-modal, .swiss-modal').forEach(modal => {
-        modal.classList.remove('active');
-    });
 };
 
 window.bookService = function(serviceName) {

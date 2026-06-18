@@ -1283,19 +1283,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Убедимся, что bookRoom доступна глобально
-window.bookRoom = window.bookRoom || function(roomName) {
-    console.log('Booking room from rooms.html:', roomName);
-    // Резервная функция на случай, если scripts.js не загрузился
-    const params = new URLSearchParams(window.location.search);
-    const bookingParams = new URLSearchParams();
-    
-    bookingParams.set('room', roomName);
-    bookingParams.set('checkin', params.get('checkin') || '15.11.2024');
-    bookingParams.set('checkout', params.get('checkout') || '18.11.2024');
-    bookingParams.set('guests', params.get('guests') || '2 гостя');
-    
-    window.location.href = "booking.html?" + bookingParams.toString();
-};
+
 
 // Анимации при загрузке для rooms.html
 window.addEventListener("load", () => {
