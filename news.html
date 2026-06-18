@@ -681,11 +681,11 @@
     }
     
     function sharePost(url, title) {
-        const shareText = `Новость от отеля "Атриум": ${title}`;
+        const shareText = `Новость от гостиницы "Атриум": ${title}`;
         
         if (navigator.share) {
             navigator.share({
-                title: 'Гостиница Атриум',
+                title: 'Отель Атриум',
                 text: shareText,
                 url: url
             });
